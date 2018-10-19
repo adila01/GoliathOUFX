@@ -1,8 +1,8 @@
-# GoliathENVIOUSFX
+# GoliathOUFX
 Linux Nvidia GPU overclocking utility written in JavaFX
 
 ## Download
-You can download from the [releases](https://github.com/BlueGoliath/GoliathENVIOUSFX/releases) page.
+You can download from the [releases](https://github.com/BlueGoliath/GoliathOUFX/releases) page.
 
 ## Features(currently)
 * Easily get supported Nvidia Settings CLI Attribute readouts
