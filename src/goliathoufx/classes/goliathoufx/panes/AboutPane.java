@@ -50,13 +50,11 @@ public class AboutPane extends VBox
         sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/GoliathENVIOUSFX");
         sourceLabel.setOnMouseClicked(new SourceHandler());
         
-        super.getChildren().add(new Label("Goliath Overclocking Utility FX V1 Alpha"));
+        super.getChildren().add(new Label("GoliathOUFX V1"));
         
         super.getChildren().add(new Label("An easy to use, Open Source overclocking utility for Nvidia graphics cards in Linux using Java & JavaFX."));
         
         super.getChildren().add(sourceLabel);
-        
-        super.getChildren().add(new Label("Java Runtime: " + Runtime.version().toString()));
     }
     private class SourceHandler implements EventHandler<MouseEvent>
     {

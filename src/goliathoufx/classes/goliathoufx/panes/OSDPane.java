@@ -171,7 +171,16 @@ public class OSDPane extends VBox
             if(onList.getItems().contains(fullList.getSelectionModel().getSelectedItem()))
                 return;
                 
-            onList.getItems().add(onList.getSelectionModel().getSelectedIndex(), fullList.getSelectionModel().getSelectedItem());
+            if(onList.getItems().isEmpty() || onList.getItems().size() == 1)
+            {
+                onList.getItems().add(fullList.getSelectionModel().getSelectedItem());
+                onList.getSelectionModel().selectFirst();
+            }
+            else
+            {
+                onList.getItems().add(onList.getSelectionModel().getSelectedIndex(), fullList.getSelectionModel().getSelectedItem());
+                onList.getSelectionModel().select(onList.getSelectionModel().getSelectedIndex());
+            }
         }
     }
     
@@ -180,6 +189,9 @@ public class OSDPane extends VBox
         @Override
         public void handle(MouseEvent event)
         {
+            if(onList.getSelectionModel().isEmpty())
+                return;
+            
             int index = onList.getSelectionModel().getSelectedIndex();
             onList.getItems().remove(index);
             
