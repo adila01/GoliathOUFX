@@ -32,6 +32,11 @@ Native packaged versions do not need Java as a JRE is automatically included
 * Attribute updating is CPU intensive(nothing can be done about it, sadly).
 * Use of the OSD can and will cause performance issues with games.
 
+## Building
+Building is done via Ant and Netbeans 9. To build, place the contents of the downloaded ZIP files from the How It Works section into a project folder and open each folder. Add GoliathENVIOUS and GoliathTerminal as dependencies to the project.
+
+Note: GoliathCSS is optional.
+
 ## Disclaimer
 
 As per the license, I accept no responsiblity for any damages that happen by using this utility.
