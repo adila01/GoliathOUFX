@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package goliathoufx.panes;
+package goliathoufx.custom;
 
 import javafx.beans.property.Property;
 import javafx.geometry.Insets;

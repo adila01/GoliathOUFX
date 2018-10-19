@@ -23,6 +23,7 @@
  */
 package goliathoufx.panes;
 
+import goliathoufx.custom.Space;
 import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;

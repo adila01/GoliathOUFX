@@ -1,5 +1,6 @@
 package goliathoufx.panes;
 
+import goliathoufx.custom.Space;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsmi.main.NvSMI;

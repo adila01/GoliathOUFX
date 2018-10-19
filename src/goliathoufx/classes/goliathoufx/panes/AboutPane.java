@@ -47,7 +47,7 @@ public class AboutPane extends VBox
         super.setPadding(new Insets(10,10,10,10));
         super.setSpacing(25);
         
-        sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/Goliath-Overclocking-Utility-FX");
+        sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/GoliathENVIOUSFX");
         sourceLabel.setOnMouseClicked(new SourceHandler());
         
         super.getChildren().add(new Label("Goliath Overclocking Utility FX V1 Alpha"));

@@ -1,5 +1,6 @@
 package goliathoufx.panes;
 
+import goliathoufx.custom.Space;
 import goliath.nvsettings.main.NvSettings;
 import goliathoufx.panes.fan.FanOptionPane;
 import java.util.ArrayList;
