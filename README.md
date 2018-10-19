@@ -1,4 +1,4 @@
-# GoliathENVIOUSFX
+# GoliathOUFX
 Linux Nvidia GPU overclocking utility written in JavaFX
 
 ## Download
