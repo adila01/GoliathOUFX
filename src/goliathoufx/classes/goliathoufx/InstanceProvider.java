@@ -24,7 +24,6 @@
 package goliathoufx;
 
 import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.exceptions.InvalidAttributeException;
 import goliath.nvsettings.gpu.fan.FanManager;
 import goliath.nvsettings.gpu.fan.FanProfile;
 import goliath.nvsettings.gpu.fan.FanProfileImporter;
@@ -36,8 +35,6 @@ import goliath.nvsmi.main.NvSMI;
 import static goliathoufx.GoliathOUFX.APP_LOGGER;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class InstanceProvider
 {
