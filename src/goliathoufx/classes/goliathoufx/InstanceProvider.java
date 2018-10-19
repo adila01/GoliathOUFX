@@ -23,6 +23,7 @@
  */
 package goliathoufx;
 
+import goliath.nvsettings.enums.GPUFamily;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.gpu.fan.FanManager;
 import goliath.nvsettings.gpu.fan.FanProfile;
@@ -102,7 +103,8 @@ public class InstanceProvider
         
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPowerDraw());
         
-        ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPerformanceLimit());
+        if(NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.PASCAL) || NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.TURING))
+            ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPerformanceLimit());
         
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getCoreTemp());
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getFan().getFanTargetSpeed());

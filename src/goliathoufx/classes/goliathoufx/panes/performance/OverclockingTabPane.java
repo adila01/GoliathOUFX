@@ -26,7 +26,6 @@ package goliathoufx.panes.performance;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsettings.targets.NvGPU;
-import goliath.nvsmi.main.NvSMI;
 import goliathoufx.panes.AppTabPane;
 import java.util.ArrayList;
 import javafx.scene.control.Tab;
@@ -53,9 +52,9 @@ public class OverclockingTabPane extends TabPane
         tabs.add(new Tab("Memory Offset(Mhz)"));
         tabs.get(tabs.size()-1).setContent(new OCPaneTemplate(gpu.getMemoryOffset()));
         
-        if(NvSettings.getPrimaryGPU().getVoltageOffset().getOperationalStatus().equals(OperationalStatus.CONTROLLABLE))
+        if(NvSettings.getPrimaryGPU().getVoltageOffset().getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
         {
-            tabs.add(new Tab("Voltage Offset(mV)"));
+            tabs.add(new Tab("Voltage Offset(uV)"));
             tabs.get(tabs.size()-1).setContent(new OCPaneTemplate(gpu.getVoltageOffset()));
         }
         

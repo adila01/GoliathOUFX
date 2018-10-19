@@ -65,7 +65,7 @@ public class AboutPane extends VBox
         public SourceHandler()
         {
             shell = new Terminal();
-            shell.setCommand("xdg-open https://github.com/BlueGoliath/Goliath-Overclocking-Utility-FX");
+            shell.setCommand("xdg-open https://github.com/BlueGoliath/GoliathENVIOUSFX");
         }
         
         @Override

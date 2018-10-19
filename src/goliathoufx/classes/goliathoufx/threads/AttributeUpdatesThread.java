@@ -23,6 +23,7 @@
  */
 package goliathoufx.threads;
 
+import goliath.nvsettings.enums.GPUFamily;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.GoliathOUFX;
@@ -54,7 +55,10 @@ public class AttributeUpdatesThread extends Thread
             
             NvSettings.getPrimaryGPU().updateAttributes();
             NvSMI.getPowerDraw().update();
-            NvSMI.getPerformanceLimit().update();
+            
+            if(NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.PASCAL) || NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.TURING))
+                NvSMI.getPerformanceLimit().update();
+            
             //Platform.runLater(new LabelUpdateRunner(PerformanceModePane.getLabel(), NvSettings.getPrimaryGPU().getCurrentPerformanceLevelAttribute().cmdValueProperty().getValue()));
         }
     }

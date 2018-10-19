@@ -1,8 +1,10 @@
 package goliathoufx.panes;
 
+import goliath.nvsettings.enums.GPUFamily;
 import goliathoufx.custom.Space;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.interfaces.NvReadable;
+import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.panes.performance.OCPaneTemplate;
 import java.util.ArrayList;
@@ -23,7 +25,10 @@ public class NvSMIInfoPane extends VBox
         List<NvReadable> rds = new ArrayList<>();
         rds.add(NvSMI.getDefaultPowerLimit());
         rds.add(NvSMI.getPowerLimit());
-        rds.add(NvSMI.getPerformanceLimit());
+        
+        if(NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.PASCAL) || NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.TURING))
+            rds.add(NvSMI.getPerformanceLimit());
+        
         rds.add(NvSMI.getPowerDraw());
         
         powerPane = new ReadableTablePane(rds);
