@@ -39,7 +39,7 @@ public class AppFrame extends VBox
     public AppFrame(Stage appStage)
     {
         super();
-        super.getChildren().add(new TitlePane("Goliath Overclocking Utility - " + NvSettings.getPrimaryGPU().nameProperty().get() + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue(), appStage));
+        super.getChildren().add(new TitlePane("Goliath Overclocking Utility V1.01 - " + NvSettings.getPrimaryGPU().nameProperty().get() + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue(), appStage));
         //TabPanel - has to be set up first before Menu for the "Tabs" menu item.
         tabPanel = new AppTabPane();
         

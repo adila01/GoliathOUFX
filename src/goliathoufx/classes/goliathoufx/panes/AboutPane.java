@@ -47,7 +47,7 @@ public class AboutPane extends VBox
         super.setPadding(new Insets(10,10,10,10));
         super.setSpacing(25);
         
-        sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/GoliathENVIOUSFX");
+        sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/GoliathOUFX");
         sourceLabel.setOnMouseClicked(new SourceHandler());
         
         super.getChildren().add(new Label("GoliathOUFX V1"));
@@ -63,7 +63,7 @@ public class AboutPane extends VBox
         public SourceHandler()
         {
             shell = new Terminal();
-            shell.setCommand("xdg-open https://github.com/BlueGoliath/GoliathENVIOUSFX");
+            shell.setCommand("xdg-open https://github.com/BlueGoliath/GoliathOUFX");
         }
         
         @Override

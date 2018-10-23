@@ -23,12 +23,10 @@
  */
 package goliathoufx.panes;
 
-import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliathoufx.customtabs.NotifyTab;
 import goliathoufx.customtabs.PromptTab;
 import java.util.ArrayList;
-import java.util.List;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
