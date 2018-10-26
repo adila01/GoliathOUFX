@@ -24,6 +24,7 @@
 package goliathoufx.panes.fan;
 
 import goliath.nvsettings.enums.FanMode;
+import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.exceptions.ValueSetFailedException;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.custom.LabeledSlider;
@@ -65,8 +66,10 @@ public class FanOptionPane extends HBox
 
         modes = new ComboBox<>(FXCollections.observableArrayList(gpu.getFanMode().getController().get().getAllValues().getAllInRange().get()));
         modes.getSelectionModel().selectedItemProperty().addListener(new ModeHandler());
-        
         modes.getSelectionModel().select(g.getFanMode().getCurrentValue());
+        
+        if(gpu.getFanMode().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+            modes.setDisable(true);
 
         modeBox = new HBox();
         modeBox.setSpacing(8);

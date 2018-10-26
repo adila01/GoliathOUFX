@@ -39,7 +39,7 @@ public class AppFrame extends VBox
     public AppFrame(Stage appStage)
     {
         super();
-        super.getChildren().add(new TitlePane("Goliath Overclocking Utility V1.02 - " + NvSettings.getPrimaryGPU().nameProperty().get() + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue(), appStage));
+        super.getChildren().add(new TitlePane("Goliath Overclocking Utility V1.03 - " + NvSettings.getPrimaryGPU().nameProperty().get() + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue(), appStage));
         //TabPanel - has to be set up first before Menu for the "Tabs" menu item.
         tabPanel = new AppTabPane();
         
@@ -48,7 +48,25 @@ public class AppFrame extends VBox
         
         super.getChildren().addAll(appMenu, tabPanel);
 
-        if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.ROOT_REQUIRED))
+        
+        
+        if(NvSettings.getPrimaryGPU().getCoreOffset().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) && NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE))
+        {
+            NotifyTab notify = new NotifyTab();
+            notify.setTabText("Warning");
+            notify.setHeaderText("GoliathENVIOUS API was unable to read core offset from nvidia-settings & running as normal user.");
+            notify.setDescText("This is likely because a valid cool-bits value is not set.\n\nOverclocking and fan control are disabled.\n\nSome features require root.");
+            AppTabPane.getTabPane().showNotifyTab(notify);
+        }
+        else if(NvSettings.getPrimaryGPU().getCoreOffset().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+        {
+            NotifyTab notify = new NotifyTab();
+            notify.setTabText("Warning");
+            notify.setHeaderText("GoliathENVIOUS API was unable to read core offset from nvidia-settings.");
+            notify.setDescText("This is likely because a valid cool-bits value is not set.\n\nOverclocking and fan control are disabled.");
+            AppTabPane.getTabPane().showNotifyTab(notify);
+        }
+        else if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE))
         {
             NotifyTab notify = new NotifyTab();
             notify.setTabText("Warning");

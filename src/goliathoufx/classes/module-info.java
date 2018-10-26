@@ -5,6 +5,7 @@ module goliathoufx
     requires javafx.controls;
     requires goliath.nvsettings;
     requires goliath.nvsmi;
+    requires goliath.nvxconfig;
     requires goliath.io;
     requires goliath.css;
     

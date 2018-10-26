@@ -1,5 +1,6 @@
 package goliathoufx.panes.performance;
 
+import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.exceptions.ControllerResetFailedException;
 import goliath.nvsettings.exceptions.ValueSetFailedException;
 import goliath.nvsettings.interfaces.NvAttribute;
@@ -47,6 +48,12 @@ public class OCPaneTemplate extends VBox
         reset = new Button("Reset");
         reset.setPrefWidth(100);
         reset.setOnMouseClicked(new ResetHandler());
+        
+        if(rdbl.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+        {
+            apply.setDisable(true);
+            reset.setDisable(true);
+        }
         
         buttonBox.getChildren().add(apply);
         buttonBox.getChildren().add(reset);

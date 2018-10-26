@@ -25,7 +25,6 @@ package goliathoufx;
 
 import goliath.nvsettings.exceptions.ControllerResetFailedException;
 import goliath.nvsettings.main.NvSettings;
-import goliath.nvsmi.main.NvSMI;
 import goliathoufx.panes.ConsolePane;
 import goliathoufx.threads.AttributeUpdatesThread;
 import java.util.ArrayList;
@@ -84,7 +83,7 @@ public class GoliathOUFX extends Application
         APP_SCENE.getStylesheets().add("goliath/css/Goliath-Magma.css");
         
         stage.setScene(APP_SCENE);
-        stage.setTitle("Goliath Overclocking Utility V1.02 - " + NvSettings.getPrimaryGPU().nameProperty().get()
+        stage.setTitle("Goliath Overclocking Utility V1.03 - " + NvSettings.getPrimaryGPU().nameProperty().get()
                 + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue());
         
         stage.initStyle(StageStyle.UNDECORATED);

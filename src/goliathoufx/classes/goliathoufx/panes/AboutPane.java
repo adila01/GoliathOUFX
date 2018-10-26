@@ -50,7 +50,7 @@ public class AboutPane extends VBox
         sourceLabel = new Label("You can view the source code at:\nhttps://github.com/BlueGoliath/GoliathOUFX");
         sourceLabel.setOnMouseClicked(new SourceHandler());
         
-        super.getChildren().add(new Label("GoliathOUFX V1.02"));
+        super.getChildren().add(new Label("GoliathOUFX V1.03"));
         
         super.getChildren().add(new Label("An easy to use, Open Source overclocking utility for Nvidia graphics cards in Linux using Java & JavaFX."));
         

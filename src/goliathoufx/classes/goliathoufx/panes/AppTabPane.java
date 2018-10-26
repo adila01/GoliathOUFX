@@ -23,7 +23,9 @@
  */
 package goliathoufx.panes;
 
+import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.main.NvSettings;
+import goliath.nvxconfig.NvXConfig;
 import goliathoufx.customtabs.NotifyTab;
 import goliathoufx.customtabs.PromptTab;
 import java.util.ArrayList;
@@ -89,6 +91,12 @@ public class AppTabPane extends TabPane
         tabs.add(new Tab("Misc"));
         tabs.get(tabs.size()-1).setContent(new MiscPane());
         */
+        
+        if(NvXConfig.getCoolbitsController().getOperationalStatus().equals(OperationalStatus.CONTROLLABLE))
+        {
+            tabs.add(new Tab("NvXConfig"));
+            tabs.get(tabs.size()-1).setContent(new NvXConfigPane());
+        }
         
         tabs.add(new Tab("App Console"));
         tabs.get(tabs.size()-1).setContent(pane);
