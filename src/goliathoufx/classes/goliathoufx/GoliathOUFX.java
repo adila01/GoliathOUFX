@@ -83,7 +83,7 @@ public class GoliathOUFX extends Application
         APP_SCENE.getStylesheets().add("goliath/css/Goliath-Magma.css");
         
         stage.setScene(APP_SCENE);
-        stage.setTitle("Goliath Overclocking Utility V1.03 - " + NvSettings.getPrimaryGPU().nameProperty().get()
+        stage.setTitle("Goliath Overclocking Utility V1.04 - " + NvSettings.getPrimaryGPU().nameProperty().get()
                 + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue());
         
         stage.initStyle(StageStyle.UNDECORATED);
