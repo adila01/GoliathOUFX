@@ -1,16 +1,12 @@
-package goliathoufx.panes.performance;
+package goliathoufx.custom;
 
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.exceptions.ControllerResetFailedException;
 import goliath.nvsettings.exceptions.ValueSetFailedException;
-import goliath.nvsettings.interfaces.NvAttribute;
-import goliath.nvsettings.interfaces.NvControllable;
 import goliath.nvsettings.interfaces.NvReadable;
-import goliathoufx.custom.LabeledSlider;
+import goliathoufx.customtabs.NotifyTab;
 import goliathoufx.customtabs.PromptTab;
 import goliathoufx.panes.AppTabPane;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -18,15 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class OCPaneTemplate extends VBox
+public class GenericControllableSliderBox extends VBox
 {
-    private HBox buttonBox;
+    private final HBox buttonBox;
     private final LabeledSlider slider;
-    private Button apply;
-    private NvReadable<Integer> readable;
+    private final Button apply;
+    private final NvReadable<Integer> readable;
     private Button reset;
     
-    public OCPaneTemplate(NvReadable<Integer> rdbl)
+    public GenericControllableSliderBox(NvReadable<Integer> rdbl)
     {
         super();
         super.setPadding(new Insets(10,10,10,10));
@@ -49,7 +45,7 @@ public class OCPaneTemplate extends VBox
         reset.setPrefWidth(100);
         reset.setOnMouseClicked(new ResetHandler());
         
-        if(rdbl.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+        if(!rdbl.getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
         {
             apply.setDisable(true);
             reset.setDisable(true);
@@ -76,7 +72,7 @@ public class OCPaneTemplate extends VBox
         {
             tab = new PromptTab();
             tab.setHeaderText("Are you sure you would like to make this change?");
-            tab.setDescText("Value will be changed from " + readable.getCurrentValue() + " to " + (int)slider.getSlider().getValue() + ".");
+            tab.setDescText(readable.displayNameProperty().get() + " will be changed from " + readable.getCurrentValue() + " to " + (int)slider.getSlider().getValue() + ".");
             
             tab.setYesButtonHandler(new YesHandler());
             tab.setNoButtonHandler(new NoHandler());
@@ -89,15 +85,26 @@ public class OCPaneTemplate extends VBox
             @Override
             public void handle(MouseEvent event)
             {
+                int val = readable.getCurrentValue();
+                AppTabPane.getTabPane().removeSpecialTab();
                 try
                 {
                     readable.getController().get().setValue((int)slider.getSlider().getValue());
+                    
+                    NotifyTab notify = new NotifyTab();
+                    notify.setTabText("Notification");
+                    notify.setHeaderText("Value changed for " + readable.displayNameProperty().get() + ".");
+                    notify.setDescText("Value changed from " + val + " to " + readable.getCurrentValue() + ".");
+                    AppTabPane.getTabPane().showNotifyTab(notify);
                 }
                 catch (ValueSetFailedException ex)
                 {
-                    Logger.getLogger(OCPaneTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                    NotifyTab notify = new NotifyTab();
+                    notify.setTabText("Notification");
+                    notify.setHeaderText("Failed to set value for " + readable.displayNameProperty().get() + ".");
+                    notify.setDescText("Reason: " + ex.getLocalizedMessage() + ".");
+                    AppTabPane.getTabPane().showNotifyTab(notify);
                 }
-                AppTabPane.getTabPane().removeSpecialTab();
             }
         }
         
@@ -116,14 +123,24 @@ public class OCPaneTemplate extends VBox
         @Override
         public void handle(MouseEvent event)
         {
-            
+            int val = readable.getCurrentValue();
             try
             {
                 readable.getController().get().reset();
+                
+                NotifyTab notify = new NotifyTab();
+                notify.setTabText("Notification");
+                notify.setHeaderText(readable.displayNameProperty().get() + " has been reset.");
+                notify.setDescText("Value changed from " + val + " to " + readable.getCurrentValue() + ".");
+                AppTabPane.getTabPane().showNotifyTab(notify);
             }
             catch (ControllerResetFailedException ex)
             {
-                Logger.getLogger(OCPaneTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                NotifyTab notify = new NotifyTab();
+                notify.setTabText("Notification");
+                notify.setHeaderText("Failed to reset " + readable.displayNameProperty().get() + ".");
+                notify.setDescText("Reason: " + ex.getLocalizedMessage() + ".");
+                AppTabPane.getTabPane().showNotifyTab(notify);
             }
             slider.getSlider().setValue(readable.getCurrentValue());
             slider.getTextBox().setText(String.valueOf(readable.getCurrentValue()));

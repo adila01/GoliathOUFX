@@ -56,7 +56,7 @@ public class TitlePane extends BorderPane
         stage = appStage;
         
         titleLabel = new Label(name);
-        titleLabel.setPadding(new Insets(3,3,3,3));
+        titleLabel.setPadding(new Insets(5,5,5,5));
         
         HBox buttonBox = new HBox();
         

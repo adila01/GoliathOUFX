@@ -27,14 +27,18 @@ import javafx.scene.layout.Pane;
 
 public class Space extends Pane
 {
-    public Space()
+    public Space(boolean alt)
     {
         super();
-        super.getStyleClass().add("space");
         
-        super.setMinWidth(3);
-        super.setMaxWidth(3);
+        if(alt)
+            super.getStyleClass().add("space-alt");
+        else
+            super.getStyleClass().add("space");
+         
+        super.setMinWidth(1);
+        super.setMaxWidth(1);
         super.setMinHeight(25);
-        super.setMaxHeight(25);
+        super.setMaxHeight(25);  
     }
 }

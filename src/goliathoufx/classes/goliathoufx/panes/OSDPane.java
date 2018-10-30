@@ -31,7 +31,7 @@ import goliathoufx.InstanceProvider;
 import goliathoufx.osd.OSDStage;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
@@ -39,6 +39,9 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -108,7 +111,7 @@ public class OSDPane extends VBox
         osdSelectionBox.getChildren().add(buttonBox);
         osdSelectionBox.getChildren().add(onList);
         
-        Space space = new Space();
+        Space space = new Space(false);
         space.setMinWidth(AppTabPane.CONTENT_WIDTH);
         space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
         space.setMinHeight(1);
@@ -124,35 +127,72 @@ public class OSDPane extends VBox
     private class OSDLaunchPane extends VBox
     {
         private OSDStage osd;
+        private final Spinner<Integer> xLoc, yLoc;
         
         public OSDLaunchPane()
         {
-            super.setPadding(new Insets(0,0,8,8));
             super.setSpacing(8);
             
+            HBox optionsBox = new HBox();
+            optionsBox.setPadding(new Insets(0,0,0,8));
+            optionsBox.setSpacing(8);
+            
+            xLoc = new Spinner<>();
+            xLoc.setPrefWidth(85);
+            xLoc.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1920));
+
+            yLoc = new Spinner<>();
+            yLoc.setPrefWidth(85);
+            yLoc.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1080));
+            
+            TextField colorField = new TextField("#00FF00");
+            colorField.setPrefWidth(100);
+            colorField.textProperty().addListener(new ColorListener());
+            
+            optionsBox.getChildren().addAll(new Label("X Location:"), xLoc, new Space(false), new Label("Y Location:"), yLoc);
+            //optionsBox.getChildren().addAll(new Space(false), new Label("Color:"), colorField);
+            
+            HBox buttonBox = new HBox();
+            buttonBox.setPadding(new Insets(0,0,10,10));
+            buttonBox.setSpacing(8);
+            
+            Space space = new Space(false);
+            space.setMinWidth(AppTabPane.CONTENT_WIDTH);
+            space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
+            space.setMinHeight(1);
+            space.setMaxHeight(1);
+            
             Button enableButton = new Button("Enable");
+            enableButton.setPrefWidth(100);
             enableButton.setOnMouseClicked(new LaunchButtonHandler());
             
-            super.getChildren().add(enableButton);
-            super.getChildren().add(new Label("NOTICE: Use of the OSD WILL cause performance issues."));
+            buttonBox.getChildren().add(enableButton);
             
+            super.getChildren().addAll(optionsBox, space, buttonBox);
+            
+        }
+        
+        private class ColorListener implements ChangeListener<String>
+        {
+
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                if(osd != null)
+                    osd.setColor(newValue);
+            }
         }
         
         private class LaunchButtonHandler implements EventHandler<MouseEvent>
         {
-            public void changed(ObservableValue<? extends StringProperty> observable, StringProperty oldValue, StringProperty newValue)
-            {
-                if(newValue.getValue().equals("On"))
-                    osd = new OSDStage();
-                osd.show();
-            }
-
             @Override
             public void handle(MouseEvent event)
             {
                 if(osd == null)
                     osd = new OSDStage();
                 
+                osd.setX(xLoc.getValue());
+                osd.setY(yLoc.getValue());
                 osd.show();
             }
         }

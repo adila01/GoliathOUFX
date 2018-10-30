@@ -60,6 +60,11 @@ public class OSDStage extends Stage
         super.show();
     }
 
+    public void setColor(String col)
+    {
+        ((OsdTable)scene.getRoot()).setColor(col);
+    }
+    
     @Override
     public void close()
     {
@@ -75,7 +80,7 @@ public class OSDStage extends Stage
         public OsdTable()
         {
             super();
-            super.setPrefWidth(427);
+            super.setPrefWidth(437);
             super.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
             super.setEditable(false);
             super.setMouseTransparent(true);
@@ -84,8 +89,8 @@ public class OSDStage extends Stage
             super.setItems(OSDPane.getOnList().getItems());
             
             colOne = new TableColumn<>();
-            colOne.setMinWidth(225);
-            colOne.setMaxWidth(225);
+            colOne.setMinWidth(235);
+            colOne.setMaxWidth(235);
             colOne.setStyle("-fx-text-fill: #00FF00;");
             colOne.setCellValueFactory(new PropertyValueFactory<>("displayName"));
             colOne.setEditable(false);
@@ -99,6 +104,12 @@ public class OSDStage extends Stage
 
             super.getColumns().add(colOne);
             super.getColumns().add(colTwo);
+        }
+        
+        public void setColor(String col)
+        {
+            colOne.setStyle("-fx-text-fill: " + col);
+            colTwo.setStyle("-fx-text-fill: " + col);
         }
     }
 }

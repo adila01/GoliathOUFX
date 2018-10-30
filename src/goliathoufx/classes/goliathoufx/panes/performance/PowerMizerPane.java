@@ -25,7 +25,8 @@ package goliathoufx.panes.performance;
 
 import goliath.nvsettings.enums.PerformanceLevel;
 import goliath.nvsettings.targets.NvGPU;
-import goliathoufx.panes.performance.powermizer.PerformanceModePane;
+import goliathoufx.custom.Space;
+import goliathoufx.panes.AppTabPane;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,18 +42,11 @@ public class PowerMizerPane extends VBox
     private final TableColumn<PerformanceLevel, Integer> minMemory;
     private final TableColumn<PerformanceLevel, Integer> maxMemory;
     
-    private final PerformanceModePane performancePane;
-    private final NvGPU gpu;
-    
     public PowerMizerPane(NvGPU g)
     {
         super();
         
-        gpu = g;
-        
         table = new TableView<>(FXCollections.observableArrayList(PerformanceLevel.values()));
-        table.setMinHeight(125);
-        table.setMaxHeight(125);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setEditable(false);
         
@@ -87,7 +81,12 @@ public class PowerMizerPane extends VBox
         maxMemory.setSortable(false);
         table.getColumns().addAll(perfLevel, minClock, maxClock, minMemory, maxMemory);
        
-        performancePane = new PerformanceModePane(gpu);
-        super.getChildren().addAll(table, performancePane);
+        Space space = new Space(true);
+        space.setMinWidth(AppTabPane.CONTENT_WIDTH);
+        space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
+        space.setMinHeight(8);
+        space.setMaxHeight(8);
+        
+        super.getChildren().addAll(table, space);
     }         
 }

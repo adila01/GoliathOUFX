@@ -1,22 +1,23 @@
 package goliathoufx.panes;
 
+import goliathoufx.custom.GenericReadableTablePane;
 import goliath.nvsettings.enums.GPUFamily;
-import goliathoufx.custom.Space;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
-import goliathoufx.panes.performance.OCPaneTemplate;
+import goliathoufx.custom.Space;
+import goliathoufx.custom.GenericControllableSliderBox;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 
 public class NvSMIInfoPane extends VBox
 {
-    private final ReadableTablePane powerPane;
-    private OCPaneTemplate powerTempPane;
+    private final GenericReadableTablePane powerPane;
+    private GenericControllableSliderBox powerTempPane;
     
     public NvSMIInfoPane()
     {
@@ -31,27 +32,27 @@ public class NvSMIInfoPane extends VBox
         
         rds.add(NvSMI.getPowerDraw());
         
-        powerPane = new ReadableTablePane(rds);
+        powerPane = new GenericReadableTablePane(rds);
+        powerTempPane = new GenericControllableSliderBox(NvSMI.getPowerLimit());
         
-        if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
-            powerTempPane = new OCPaneTemplate(NvSMI.getPowerLimit());
-        
+        Space space = new Space(true);
+        space.setMinWidth(AppTabPane.CONTENT_WIDTH);
+        space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
+        space.setMinHeight(8);
+        space.setMaxHeight(8);
+
+        TabPane tabPane = new TabPane();
+        tabPane.setMinHeight(104);
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        tabPane.getTabs().add(new Tab("Power Limit(W)"));
+        tabPane.getTabs().get(0).setContent(powerTempPane);
+
+        for(int i = 0; i < tabPane.getTabs().size(); i++)
+            tabPane.getTabs().get(0).setClosable(false);
+
         super.getChildren().add(powerPane);
-        
-        if(powerTempPane != null)
-        {
-            Label label = new Label("Max Power Limit Control");
-            label.setPadding(new Insets(8,8,8,8));
-            
-            Space space = new Space();
-            space.setMinWidth(AppTabPane.CONTENT_WIDTH);
-            space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
-            space.setMinHeight(1);
-            space.setMaxHeight(1);
-            
-            super.getChildren().add(label);
-            super.getChildren().add(space);
-            super.getChildren().add(powerTempPane);
-        }
+        super.getChildren().add(space);
+        super.getChildren().add(tabPane);        
     }
 }

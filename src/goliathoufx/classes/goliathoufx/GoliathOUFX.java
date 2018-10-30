@@ -80,10 +80,10 @@ public class GoliathOUFX extends Application
     public void start(Stage stage)
     {
         APP_SCENE = new Scene(new AppFrame(stage));
-        APP_SCENE.getStylesheets().add("goliath/css/Goliath-Magma.css");
+        APP_SCENE.getStylesheets().add("goliath/css/Goliath-Envy.css");
         
         stage.setScene(APP_SCENE);
-        stage.setTitle("Goliath Overclocking Utility V1.04 - " + NvSettings.getPrimaryGPU().nameProperty().get()
+        stage.setTitle("Goliath Overclocking Utility V2 - " + NvSettings.getPrimaryGPU().nameProperty().get()
                 + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue());
         
         stage.initStyle(StageStyle.UNDECORATED);

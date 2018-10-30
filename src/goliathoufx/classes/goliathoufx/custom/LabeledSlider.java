@@ -28,11 +28,19 @@ public class LabeledSlider extends HBox
         slider = new Slider();
         slider.getStyleClass().add("slider");
         slider.setPrefWidth(AppTabPane.CONTENT_WIDTH-75);
-        slider.setMin(attr.getController().get().getMinValue());
-        slider.setMax(attr.getController().get().getMaxValue());
         
-
-        slider.setValue(attr.getCurrentValue());
+        if(!attribute.getController().isEmpty())
+        {
+            slider.setMin(attr.getController().get().getMinValue());
+            slider.setMax(attr.getController().get().getMaxValue());
+            slider.setValue(attr.getCurrentValue());
+        }
+        else
+        {
+            slider.setMin(attr.getCurrentValue());
+            slider.setMax(attr.getCurrentValue());
+            slider.setValue(attr.getCurrentValue());
+        }
         
         slider.setOnMouseReleased(new DefaultContSliderHandler());
         

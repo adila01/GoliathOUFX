@@ -23,9 +23,9 @@
  */
 package goliathoufx.panes.performance;
 
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.main.NvSettings;
+import goliathoufx.custom.GenericControllableSliderBox;
 import goliath.nvsettings.targets.NvGPU;
+import goliathoufx.custom.GenericControllableComboBox;
 import goliathoufx.panes.AppTabPane;
 import java.util.ArrayList;
 import javafx.scene.control.Tab;
@@ -40,45 +40,25 @@ public class OverclockingTabPane extends TabPane
     public OverclockingTabPane(NvGPU g)
     {
         super();
+        super.setMinHeight(104);
         super.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         super.setPrefWidth(AppTabPane.CONTENT_WIDTH);
         
         gpu = g;
         tabs = new ArrayList<>();
 
+        tabs.add(new Tab("Performance Mode"));
+        tabs.get(0).setContent(new GenericControllableComboBox<>(gpu.getPowerMizer()));
+        
         tabs.add(new Tab("Core Offset(Mhz)"));
-        tabs.get(0).setContent(new OCPaneTemplate(gpu.getCoreOffset()));
+        tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getCoreOffset()));
 
         tabs.add(new Tab("Memory Offset(Mhz)"));
-        tabs.get(tabs.size()-1).setContent(new OCPaneTemplate(gpu.getMemoryOffset()));
+        tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getMemoryOffset()));
+
+        tabs.add(new Tab("Voltage Offset(uV)"));
+        tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getVoltageOffset()));
         
-        if(NvSettings.getPrimaryGPU().getVoltageOffset().getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
-        {
-            tabs.add(new Tab("Voltage Offset(uV)"));
-            tabs.get(tabs.size()-1).setContent(new OCPaneTemplate(gpu.getVoltageOffset()));
-        }
-        
-        /*
-        tabs.add(new Tab("Core Offset(MHz)"));
-        tabs.get(0).setContent(corePane);
-        
-        tabs.add(new Tab("Memory Offset(MHz)"));
-        tabs.get(tabs.size()-1).setContent(memoryPane);
-        
-        if(gpu.getVoltageOffsetController().isAvailable())
-        {
-            voltagePane = new VoltageOffsetPane(gpu);
-            tabs.add(new Tab("Voltage Offset(mV)"));
-            tabs.get(tabs.size()-1).setContent(voltagePane);
-        }
-          
-        if(NvGPU.getPowerLimitController().isAvailable())
-        {
-            powerPane = new PowerLimitPane();
-            tabs.add(new Tab("Power Limit(W)"));
-            tabs.get(tabs.size()-1).setContent(powerPane);
-        }
-        */
         super.getTabs().addAll(tabs);
     }
 }

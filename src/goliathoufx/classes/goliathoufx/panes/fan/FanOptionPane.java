@@ -58,9 +58,9 @@ public class FanOptionPane extends HBox
         speedSlider = new LabeledSlider(gpu.getFan().getFanTargetSpeed(), true);
         speedSlider.setPrefWidth(AppTabPane.CONTENT_WIDTH-325);
 
-        Space sep = new Space();
-        sep.setMinWidth(3);
-        sep.setMaxWidth(3);
+        Space sep = new Space(false);
+        sep.setMinWidth(1);
+        sep.setMaxWidth(1);
         sep.setMinHeight(25);
         sep.setMaxHeight(25);
 

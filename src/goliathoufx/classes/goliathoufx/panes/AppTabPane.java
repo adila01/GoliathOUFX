@@ -23,6 +23,7 @@
  */
 package goliathoufx.panes;
 
+import goliathoufx.custom.GenericReadableTablePane;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvxconfig.NvXConfig;
@@ -69,13 +70,13 @@ public class AppTabPane extends TabPane
         
         tabs = new ArrayList<>();
 
-        tabs.add(new Tab("GPU Info"));
-        tabs.get(tabs.size()-1).setContent(new ReadableTablePane(new ArrayList<>(NvSettings.getPrimaryGPU().getAttributes())));
-        
-        tabs.add(new Tab("Fan Info"));
+        tabs.add(new Tab("GPU-0"));
+        tabs.get(0).setContent(new GenericReadableTablePane(new ArrayList<>(NvSettings.getPrimaryGPU().getAttributes())));
+
+        tabs.add(new Tab("FAN-0"));
         tabs.get(tabs.size()-1).setContent(new FanInfoPane());
         
-        tabs.add(new Tab("NvSMI Info"));
+        tabs.add(new Tab("NvSMI"));
         tabs.get(tabs.size()-1).setContent(new NvSMIInfoPane());
 
         tabs.add(new Tab("PowerMizer & Overclocking"));

@@ -21,9 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package goliathoufx.panes;
+package goliathoufx.custom;
 
 import goliath.nvsettings.interfaces.NvReadable;
+import goliathoufx.panes.AppTabPane;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
@@ -31,13 +32,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
-public class ReadableTablePane extends VBox
+public class GenericReadableTablePane extends VBox
 { 
     private final TableView<NvReadable> infoTable;
     private final TableColumn<NvReadable, String> displayName;
     private final TableColumn<NvReadable, String> displayValue;
     
-    public ReadableTablePane(List<NvReadable> readables)
+    public GenericReadableTablePane(List<NvReadable> readables)
     {
         super();
         super.setPrefHeight(AppTabPane.CONTENT_HEIGHT);

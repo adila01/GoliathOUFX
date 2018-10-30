@@ -48,7 +48,8 @@ public class AttributeUpdatesThread extends Thread
             try
             {
                 Thread.sleep(0);
-            } catch (InterruptedException ex)
+            }
+            catch (InterruptedException ex)
             {
                 Logger.getLogger(AttributeUpdatesThread.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -27,22 +27,16 @@ import goliath.nvsettings.enums.GPUFamily;
 import goliath.nvsettings.enums.OperationalStatus;
 import goliath.nvsettings.gpu.fan.FanManager;
 import goliath.nvsettings.gpu.fan.FanProfile;
-import goliath.nvsettings.gpu.fan.FanProfileImporter;
-import goliath.nvsettings.interfaces.NvAttribute;
 import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsettings.targets.NvGPU;
 import goliath.nvsmi.main.NvSMI;
 import static goliathoufx.GoliathOUFX.APP_LOGGER;
-import java.io.File;
 import java.util.ArrayList;
 
 public class InstanceProvider
 {
     private static final ArrayList<NvReadable> ON_SCREEN_DISPLAY_ATTRIBUTES = new ArrayList<>();
-    private static final ArrayList<FanProfile> FAN_PROFILES = new ArrayList<>();
-    
-    private static NvAttribute fanSpeedRPM;
     private static FanProfile currentProfile;
     private static FanManager fanManager;
     private static NvGPU GPU_0;
@@ -55,37 +49,9 @@ public class InstanceProvider
         
 
         APP_LOGGER.info("InstanceProvider: Found GPU " + GPU_0.nameProperty().getValue() + " with ID " + GPU_0.idProperty().getValue());
-        
-        File[] profiles;
-        FanProfileImporter loader = new FanProfileImporter();
-        
-        /*
-        APP_LOGGER.info("InstanceProvider: loading application settings...");
-        AppSettings.init();
-        APP_LOGGER.info("InstanceProvider: done loading application settings.");
-        */
+
         initAttributes();
 
-        /*
-        try
-        {
-            fanManager = new FanManager(GPU_0);
-        }
-        catch (InvalidAttributeException ex)
-        {
-            Logger.getLogger(InstanceProvider.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        profiles = APPDIR.getFanProfileDirectory().listFiles();
-        
-        for(int i = 0; i < profiles.length; i++)
-        {
-            loader.importObject(profiles[i]);
-            FAN_PROFILES.add(loader.getImportedObject());
-        }
-        
-        currentProfile = FAN_PROFILES.get(0);
-    */
     }
     
     private static void initAttributes()
@@ -107,20 +73,15 @@ public class InstanceProvider
             ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPerformanceLimit());
         
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getCoreTemp());
-        ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getFan().getFanTargetSpeed());
+        ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getFan().getFanCurrentSpeed());
         
-        APP_LOGGER.info("InstanceProvider: API providing " + GPU_0.getAttributes().size() + " attributes for primary GPU " + GPU_0.nameProperty().getValue() + ":");
-                    
-        APP_LOGGER.info("<DISPLAY-ATTRIBUTE(CMD-ATTRIBUTE)>:<CURRENT_VALUE>:<OPERATIONALSTATUS>");
+        APP_LOGGER.info("InstanceProvider: Envious API providing " + GPU_0.getAttributes().size() + " attributes for primary GPU " + GPU_0.nameProperty().getValue() + " from nvidia-settings.");
         
-        for(int i = 0; i < GPU_0.getAttributes().size(); i++)
-        {
-            APP_LOGGER.info("\t" + GPU_0.getAttributes().get(i).displayNameProperty().getValue()
-                    + "("  + GPU_0.getAttributes().get(i).cmdNameProperty().getValue()
-                    + "):" + GPU_0.getAttributes().get(i).getCurrentValue()
-                    + ":" + GPU_0.getAttributes().get(i).getOperationalStatus());
-        }
+        APP_LOGGER.info("InstanceProvider: Envious API providing " + GPU_0.getFan().getAttributes().size() + " attributes for fan of primary GPU " + GPU_0.nameProperty().getValue() + " from nvidia-settings.");   
+        APP_LOGGER.info("InstanceProvider: Envious API providing " + NvSMI.READABLES.size() + " readables from nvidia-smi.");   
+                
     }
+    
     public static AppDirectory getAppDir()
     {
         return null;
@@ -128,14 +89,6 @@ public class InstanceProvider
     public static ArrayList<NvReadable> getOSDAttributes()
     {
         return ON_SCREEN_DISPLAY_ATTRIBUTES;
-    }
-    public static NvAttribute getFanSpeedRPMAttribute()
-    {
-        return fanSpeedRPM;
-    }
-    public static ArrayList<FanProfile> getFanProfiles()
-    {
-        return FAN_PROFILES;
     }
     public static FanProfile getCurrentFanProfile()
     {

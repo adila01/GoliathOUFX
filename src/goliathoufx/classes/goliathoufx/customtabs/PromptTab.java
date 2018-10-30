@@ -45,7 +45,7 @@ public class PromptTab extends Tab
     public PromptTab()
     {
         super();
-        super.setText("Confirmation Required");
+        super.setText("Confirm");
         super.setClosable(false);
         
         pane = new Pane();
