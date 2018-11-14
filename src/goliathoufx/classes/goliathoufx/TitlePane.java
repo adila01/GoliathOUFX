@@ -24,7 +24,7 @@
 package goliathoufx;
 
 import goliath.nvsettings.enums.FanMode;
-import goliath.nvsettings.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ControllerResetFailedException;
 import goliath.nvsettings.main.NvSettings;
 import goliathoufx.customtabs.PromptTab;
 import goliathoufx.panes.AppTabPane;

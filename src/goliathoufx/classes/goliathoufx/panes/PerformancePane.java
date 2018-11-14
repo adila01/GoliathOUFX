@@ -47,7 +47,7 @@ public class PerformancePane extends VBox
 
         overclockingPane = new HBox();
         overclockingPane.getChildren().addAll(overclockingTabPane);
-
+ 
         super.getChildren().addAll(new PowerMizerPane(gpu), overclockingPane);
     }
 }

@@ -1,9 +1,8 @@
 package goliathoufx.custom;
 
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.exceptions.ControllerResetFailedException;
-import goliath.nvsettings.exceptions.ValueSetFailedException;
-import goliath.nvsettings.interfaces.NvReadable;
+import goliath.envious.enums.OperationalStatus;
+import goliath.envious.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliathoufx.customtabs.NotifyTab;
 import goliathoufx.customtabs.PromptTab;
 import goliathoufx.panes.AppTabPane;
@@ -13,21 +12,25 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class GenericControllableSliderBox extends VBox
 {
     private final HBox buttonBox;
     private final LabeledSlider slider;
     private final Button apply;
-    private final NvReadable<Integer> readable;
+    private final ReadOnlyNvReadable<Integer> readable;
     private Button reset;
     
-    public GenericControllableSliderBox(NvReadable<Integer> rdbl)
+    public GenericControllableSliderBox(ReadOnlyNvReadable<Integer> rdbl)
     {
         super();
         super.setPadding(new Insets(10,10,10,10));
-
+        
         readable = rdbl;
+        readable.valueProperty().addListener(new ValueListener());
         
         buttonBox = new HBox();
 
@@ -44,13 +47,13 @@ public class GenericControllableSliderBox extends VBox
         reset = new Button("Reset");
         reset.setPrefWidth(100);
         reset.setOnMouseClicked(new ResetHandler());
-        
+
         if(!rdbl.getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
         {
             apply.setDisable(true);
             reset.setDisable(true);
         }
-        
+
         buttonBox.getChildren().add(apply);
         buttonBox.getChildren().add(reset);
         
@@ -61,6 +64,16 @@ public class GenericControllableSliderBox extends VBox
     public int getCurrentValue()
     {
         return (int)slider.getSlider().getValue();
+    }
+    
+    private class ValueListener implements ChangeListener<Integer>
+    {
+        @Override
+        public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue)
+        {
+            slider.getSlider().setValue(newValue);
+            slider.getTextBox().setText(newValue.toString());
+        }
     }
     
     private class ApplyHandler implements EventHandler<MouseEvent>
@@ -81,11 +94,11 @@ public class GenericControllableSliderBox extends VBox
         }
         
         private class YesHandler implements EventHandler<MouseEvent>
-        {
+        {   
             @Override
             public void handle(MouseEvent event)
             {
-                int val = readable.getCurrentValue();
+                Integer val = readable.getCurrentValue();
                 AppTabPane.getTabPane().removeSpecialTab();
                 try
                 {
@@ -96,6 +109,7 @@ public class GenericControllableSliderBox extends VBox
                     notify.setHeaderText("Value changed for " + readable.displayNameProperty().get() + ".");
                     notify.setDescText("Value changed from " + val + " to " + readable.getCurrentValue() + ".");
                     AppTabPane.getTabPane().showNotifyTab(notify);
+                    
                 }
                 catch (ValueSetFailedException ex)
                 {

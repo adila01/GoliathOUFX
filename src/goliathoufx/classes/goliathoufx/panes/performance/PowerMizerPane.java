@@ -23,10 +23,13 @@
  */
 package goliathoufx.panes.performance;
 
-import goliath.nvsettings.enums.PerformanceLevel;
+import goliath.nvsettings.main.NvSettings;
+import goliath.nvsettings.performance.PerformanceLevel;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.custom.Space;
 import goliathoufx.panes.AppTabPane;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -41,42 +44,50 @@ public class PowerMizerPane extends VBox
     private final TableColumn<PerformanceLevel, Integer> maxClock;
     private final TableColumn<PerformanceLevel, Integer> minMemory;
     private final TableColumn<PerformanceLevel, Integer> maxMemory;
+    private final NvGPU gpu;
     
     public PowerMizerPane(NvGPU g)
     {
         super();
-        
-        table = new TableView<>(FXCollections.observableArrayList(PerformanceLevel.values()));
+        gpu = g;
+
+        table = new TableView<>(FXCollections.observableArrayList(g.getPerfModes().getCurrentValue()));
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setMouseTransparent(true);
         table.setEditable(false);
         
         perfLevel = new TableColumn<>("Performance Level");
         perfLevel.setCellValueFactory(new PropertyValueFactory<>("level"));
+        perfLevel.setEditable(false);
         perfLevel.setSortable(false);
         
         minClock = new TableColumn<>("Min Core(MHz)");
         minClock.setCellValueFactory(new PropertyValueFactory<>("coreMin"));
+        minClock.setEditable(false);
         minClock.setSortable(false);
         
         maxClock = new TableColumn<>("Max Core(MHz)");
+        maxClock.setEditable(false);
         maxClock.setCellValueFactory(new PropertyValueFactory<>("coreMax"));
         maxClock.setSortable(false);
         
         minMemory = new TableColumn<>("Min Memory(MHz)");
         
-        if(true)
+        if(NvSettings.getDisableExtraAbstraction())
             minMemory.setCellValueFactory(new PropertyValueFactory<>("transferMin"));
         else
-            minMemory.setCellValueFactory(new PropertyValueFactory<>("minEffectiveMemoryClock"));
+            minMemory.setCellValueFactory(new PropertyValueFactory<>("effectiveMin"));
         
+        minMemory.setEditable(false);
         minMemory.setSortable(false);
         
         maxMemory = new TableColumn<>("Max Memory(MHz)");
+        maxMemory.setEditable(false);
         
-        if(true)
+        if(NvSettings.getDisableExtraAbstraction())
             maxMemory.setCellValueFactory(new PropertyValueFactory<>("transferMax"));
         else
-            maxMemory.setCellValueFactory(new PropertyValueFactory<>("maxEffectiveMemoryClock"));
+            maxMemory.setCellValueFactory(new PropertyValueFactory<>("effectiveMax"));
         
         maxMemory.setSortable(false);
         table.getColumns().addAll(perfLevel, minClock, maxClock, minMemory, maxMemory);
@@ -87,6 +98,19 @@ public class PowerMizerPane extends VBox
         space.setMinHeight(8);
         space.setMaxHeight(8);
         
+                
+        gpu.getCurrentPerformanceLevel().valueProperty().addListener(new ValueListener());
+        table.getSelectionModel().select(gpu.getCurrentPerformanceLevel().getCurrentValue());
+        
         super.getChildren().addAll(table, space);
-    }         
+    }
+    
+    private class ValueListener implements ChangeListener<PerformanceLevel>
+    {
+        @Override
+        public void changed(ObservableValue<? extends PerformanceLevel> observable, PerformanceLevel oldValue, PerformanceLevel newValue)
+        {
+            table.getSelectionModel().select(gpu.getCurrentPerformanceLevel().getCurrentValue());
+        }
+    }
 }

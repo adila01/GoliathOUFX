@@ -24,8 +24,8 @@
 package goliathoufx.panes.fan;
 
 import goliath.nvsettings.enums.FanMode;
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.exceptions.ValueSetFailedException;
+import goliath.envious.enums.OperationalStatus;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.custom.LabeledSlider;
 import goliathoufx.panes.AppTabPane;
@@ -64,7 +64,7 @@ public class FanOptionPane extends HBox
         sep.setMinHeight(25);
         sep.setMaxHeight(25);
 
-        modes = new ComboBox<>(FXCollections.observableArrayList(gpu.getFanMode().getController().get().getAllValues().getAllInRange().get()));
+        modes = new ComboBox<>(FXCollections.observableArrayList(gpu.getFanMode().getController().get().getAllValues().getAllInRange()));
         modes.getSelectionModel().selectedItemProperty().addListener(new ModeHandler());
         modes.getSelectionModel().select(g.getFanMode().getCurrentValue());
         

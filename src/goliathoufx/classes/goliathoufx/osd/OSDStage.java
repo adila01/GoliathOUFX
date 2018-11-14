@@ -23,7 +23,6 @@
  */
 package goliathoufx.osd;
 
-import goliath.nvsettings.interfaces.NvReadable;
 import goliathoufx.panes.OSDPane;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
@@ -32,6 +31,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class OSDStage extends Stage
 {
@@ -72,15 +72,15 @@ public class OSDStage extends Stage
         super.close();
     }
 
-    private class OsdTable extends TableView<NvReadable>
+    private class OsdTable extends TableView<ReadOnlyNvReadable>
     {
 
-        private final TableColumn<NvReadable, String> colOne, colTwo;
+        private final TableColumn<ReadOnlyNvReadable, String> colOne, colTwo;
 
         public OsdTable()
         {
             super();
-            super.setPrefWidth(437);
+            super.setPrefWidth(447);
             super.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
             super.setEditable(false);
             super.setMouseTransparent(true);
@@ -89,8 +89,8 @@ public class OSDStage extends Stage
             super.setItems(OSDPane.getOnList().getItems());
             
             colOne = new TableColumn<>();
-            colOne.setMinWidth(235);
-            colOne.setMaxWidth(235);
+            colOne.setMinWidth(245);
+            colOne.setMaxWidth(245);
             colOne.setStyle("-fx-text-fill: #00FF00;");
             colOne.setCellValueFactory(new PropertyValueFactory<>("displayName"));
             colOne.setEditable(false);

@@ -8,6 +8,7 @@ module goliathoufx
     requires goliath.nvxconfig;
     requires goliath.io;
     requires goliath.css;
+    requires goliath.envious;
     
     exports goliathoufx;
     opens goliathoufx.css;

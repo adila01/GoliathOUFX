@@ -1,23 +1,23 @@
 package goliathoufx.custom;
 
-import goliath.nvsettings.exceptions.ValueSetFailedException;
-import goliath.nvsettings.interfaces.NvControllable;
-import goliath.nvsettings.interfaces.NvReadable;
+import goliath.envious.exceptions.ValueSetFailedException;
+import goliath.envious.interfaces.NvControllable;
 import goliathoufx.panes.AppTabPane;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class LabeledSlider extends HBox
 {
     private final Slider slider;
     private final TextField textBox;
-    private NvReadable<Integer> attr;
+    private final ReadOnlyNvReadable<Integer> attr;
     private final boolean setValue;
     
-    public LabeledSlider(NvReadable<Integer> attribute, boolean setVal)
+    public LabeledSlider(ReadOnlyNvReadable<Integer> attribute, boolean setVal)
     {
         super();
         super.setSpacing(8);

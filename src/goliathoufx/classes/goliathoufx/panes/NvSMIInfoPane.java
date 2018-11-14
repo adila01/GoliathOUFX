@@ -2,8 +2,6 @@ package goliathoufx.panes;
 
 import goliathoufx.custom.GenericReadableTablePane;
 import goliath.nvsettings.enums.GPUFamily;
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.custom.Space;
@@ -13,17 +11,18 @@ import java.util.List;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class NvSMIInfoPane extends VBox
 {
     private final GenericReadableTablePane powerPane;
-    private GenericControllableSliderBox powerTempPane;
+    private final GenericControllableSliderBox powerTempPane;
     
     public NvSMIInfoPane()
     {
         super();
         
-        List<NvReadable> rds = new ArrayList<>();
+        List<ReadOnlyNvReadable> rds = new ArrayList<>();
         rds.add(NvSMI.getDefaultPowerLimit());
         rds.add(NvSMI.getPowerLimit());
         

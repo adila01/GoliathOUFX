@@ -26,6 +26,14 @@
                 <script>build.xml</script>
                 <target>jar</target>
                 <clean-target>clean</clean-target>
+                <id>goliath.envious.jar</id>
+            </reference>
+            <reference>
+                <foreign-project>GoliathENVIOUS</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
                 <id>goliath.nvsettings.jar</id>
             </reference>
             <reference>

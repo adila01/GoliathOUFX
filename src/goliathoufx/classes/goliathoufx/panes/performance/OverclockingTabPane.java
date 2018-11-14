@@ -23,6 +23,7 @@
  */
 package goliathoufx.panes.performance;
 
+import goliath.nvsettings.main.NvSettings;
 import goliathoufx.custom.GenericControllableSliderBox;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.custom.GenericControllableComboBox;
@@ -46,17 +47,17 @@ public class OverclockingTabPane extends TabPane
         
         gpu = g;
         tabs = new ArrayList<>();
-
+        
         tabs.add(new Tab("Performance Mode"));
         tabs.get(0).setContent(new GenericControllableComboBox<>(gpu.getPowerMizer()));
-        
+
         tabs.add(new Tab("Core Offset(Mhz)"));
         tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getCoreOffset()));
 
         tabs.add(new Tab("Memory Offset(Mhz)"));
         tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getMemoryOffset()));
 
-        tabs.add(new Tab("Voltage Offset(uV)"));
+        tabs.add(new Tab("Voltage Offset(" + NvSettings.getPrimaryGPU().getVoltageOffset().getMeasurement() + ")"));
         tabs.get(tabs.size()-1).setContent(new GenericControllableSliderBox(gpu.getVoltageOffset()));
         
         super.getTabs().addAll(tabs);

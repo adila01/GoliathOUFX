@@ -1,9 +1,8 @@
 package goliathoufx.custom;
 
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.exceptions.ControllerResetFailedException;
-import goliath.nvsettings.exceptions.ValueSetFailedException;
-import goliath.nvsettings.interfaces.NvReadable;
+import goliath.envious.enums.OperationalStatus;
+import goliath.envious.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliathoufx.customtabs.NotifyTab;
 import goliathoufx.panes.AppTabPane;
 import javafx.collections.FXCollections;
@@ -13,38 +12,42 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class GenericControllableComboBox<E> extends HBox
 {
     private final ComboBox<E> combo;
     private final Button applyButton;
     private final Button resetButton;
-    private final NvReadable<E> readable;
+    private final ReadOnlyNvReadable<E> readable;
     
-    public GenericControllableComboBox(NvReadable<E> rdbl)
+    public GenericControllableComboBox(ReadOnlyNvReadable<E> rdbl)
     {
         super();
-        super.setPadding(new Insets(10,10,10,10));
+        super.setPadding(new Insets(22,10,10,10));
         super.setSpacing(10);
         
         readable = rdbl;
+        readable.valueProperty().addListener(new ValueListener());
         
         combo = new ComboBox<>();
-        combo.setItems(FXCollections.observableArrayList(rdbl.getController().get().getAllValues().getAllInRange().get()));
+        combo.setItems(FXCollections.observableArrayList(rdbl.getController().get().getAllValues().getAllInRange()));
         combo.getSelectionModel().select(rdbl.getCurrentValue());
         
         applyButton = new Button("Apply");
         applyButton.setOnMouseClicked(new ApplyHandler());
         applyButton.setPrefWidth(100);
         
-        if(readable.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+        if(!readable.getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
             applyButton.setDisable(true);
         
         resetButton = new Button("Reset");
         resetButton.setOnMouseClicked(new ResetHandler());
         resetButton.setPrefWidth(100);
 
-        if(readable.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+        if(!readable.getOperationalStatus().equals(OperationalStatus.READABLE_AND_CONTROLLABLE))
             resetButton.setDisable(true);
         
         super.getChildren().addAll(combo, applyButton, resetButton);
@@ -76,6 +79,15 @@ public class GenericControllableComboBox<E> extends HBox
             }
         }
 
+    }
+    
+    private class ValueListener implements ChangeListener<E>
+    {
+        @Override
+        public void changed(ObservableValue<? extends E> observable, E oldValue, E newValue)
+        {
+            combo.setValue(newValue);
+        }
     }
     
     private class ResetHandler implements EventHandler<MouseEvent>

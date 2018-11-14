@@ -1,7 +1,7 @@
 package goliathoufx.panes;
 
-import goliath.nvsettings.exceptions.ControllerResetFailedException;
-import goliath.nvsettings.exceptions.ValueSetFailedException;
+import goliath.envious.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliath.nvxconfig.NvXConfig;
 import goliath.nvxconfig.enums.Coolbits;
 import goliathoufx.custom.Space;

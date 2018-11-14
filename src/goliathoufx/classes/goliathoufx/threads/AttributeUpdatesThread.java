@@ -23,21 +23,27 @@
  */
 package goliathoufx.threads;
 
-import goliath.nvsettings.enums.GPUFamily;
-import goliath.nvsettings.main.NvSettings;
-import goliath.nvsmi.main.NvSMI;
 import goliathoufx.GoliathOUFX;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class AttributeUpdatesThread extends Thread
 {   
-    public AttributeUpdatesThread()
+    private final List<ReadOnlyNvReadable> readables;
+    private final int delay;
+    
+    
+    public AttributeUpdatesThread(List<ReadOnlyNvReadable> rdbls, int prt, int dly)
     {
         super();
         super.setDaemon(true);
         super.setName("Goliath Attribute Update Thread");
-        super.setPriority(Thread.MAX_PRIORITY);
+        super.setPriority(prt);
+        
+        readables = rdbls;
+        delay = dly;
     }
     
     @Override
@@ -47,20 +53,17 @@ public class AttributeUpdatesThread extends Thread
         {
             try
             {
-                Thread.sleep(0);
+                Thread.sleep(delay);
             }
             catch (InterruptedException ex)
             {
                 Logger.getLogger(AttributeUpdatesThread.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            NvSettings.getPrimaryGPU().updateAttributes();
-            NvSMI.getPowerDraw().update();
-            
-            if(NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.PASCAL) || NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.TURING))
-                NvSMI.getPerformanceLimit().update();
-            
-            //Platform.runLater(new LabelUpdateRunner(PerformanceModePane.getLabel(), NvSettings.getPrimaryGPU().getCurrentPerformanceLevelAttribute().cmdValueProperty().getValue()));
+            for(int i = 0; i < readables.size(); i++)
+            {
+                readables.get(i).update();
+            }
         }
     }
 }

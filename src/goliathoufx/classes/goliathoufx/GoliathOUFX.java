@@ -23,14 +23,15 @@
  */
 package goliathoufx;
 
-import goliath.nvsettings.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ControllerResetFailedException;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliath.nvsettings.main.NvSettings;
+import goliath.nvsmi.main.NvSMI;
 import goliathoufx.panes.ConsolePane;
 import goliathoufx.threads.AttributeUpdatesThread;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -48,7 +49,7 @@ public class GoliathOUFX extends Application
     public static Scene APP_SCENE;
     private static boolean DEV = false;
     
-    private static AttributeUpdatesThread attributeUpdateThread;
+    private static AttributeUpdatesThread high, med, low, fan, power;
 
     public static void main(String[] args)
     {   
@@ -65,11 +66,25 @@ public class GoliathOUFX extends Application
                     break;
             }
         }
+
+        APIDumper.dump();
         
         InstanceProvider.init();
         
-        attributeUpdateThread = new AttributeUpdatesThread();
-        attributeUpdateThread.start();
+        high = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getHighUpdateFrequencyAttributes()), Thread.MAX_PRIORITY, 0);
+        high.start();
+        
+        fan = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getFan().getAttributes()), Thread.MIN_PRIORITY, 600);
+        fan.start();
+        
+        med = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getMediumUpdateFrequencyAttributes()), Thread.MIN_PRIORITY, 750);
+        med.start();
+        
+        low = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getLowUpdateFrequencyAttributes()), Thread.MIN_PRIORITY, 1000);
+        low.start();
+        
+        power = new AttributeUpdatesThread(new ArrayList<>(NvSMI.READABLES), Thread.MIN_PRIORITY, 1250);
+        power.start();
         
         APP_LOGGER.info("Launch application GUI");
         
@@ -112,7 +127,7 @@ public class GoliathOUFX extends Application
             }
             catch (ControllerResetFailedException ex)
             {
-                Logger.getLogger(GoliathOUFX.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
         

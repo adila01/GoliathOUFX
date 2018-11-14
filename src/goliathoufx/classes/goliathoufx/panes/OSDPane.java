@@ -24,7 +24,6 @@
 package goliathoufx.panes;
 
 import goliathoufx.custom.Space;
-import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.InstanceProvider;
@@ -45,19 +44,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class OSDPane extends VBox
 {
-    private static ListView<NvReadable> staticOnList;
+    private static ListView<ReadOnlyNvReadable> staticOnList;
     
     private final OSDLaunchPane launchPane;
 
-    private final ListView<NvReadable> fullList, onList;
+    private final ListView<ReadOnlyNvReadable> fullList, onList;
     private final Button fullToOn;
     private final Button onToOff;
     
     
-    public static ListView<NvReadable> getOnList()
+    public static ListView<ReadOnlyNvReadable> getOnList()
     {
         return staticOnList;
     }
@@ -74,7 +74,7 @@ public class OSDPane extends VBox
         osdSelectionBox.setPadding(new Insets(8,8,0,7));
         osdSelectionBox.setSpacing(25);
         
-        List<NvReadable> rds = new ArrayList<>();
+        List<ReadOnlyNvReadable> rds = new ArrayList<>();
         rds.addAll(NvSettings.getPrimaryGPU().getAttributes());
         rds.add(NvSettings.getDriverVersion());
         rds.add(NvSettings.getPrimaryGPU().getFan().getFanTargetSpeed());

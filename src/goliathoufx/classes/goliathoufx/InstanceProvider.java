@@ -24,19 +24,19 @@
 package goliathoufx;
 
 import goliath.nvsettings.enums.GPUFamily;
-import goliath.nvsettings.enums.OperationalStatus;
+import goliath.envious.enums.OperationalStatus;
 import goliath.nvsettings.gpu.fan.FanManager;
 import goliath.nvsettings.gpu.fan.FanProfile;
-import goliath.nvsettings.interfaces.NvReadable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsettings.targets.NvGPU;
 import goliath.nvsmi.main.NvSMI;
 import static goliathoufx.GoliathOUFX.APP_LOGGER;
 import java.util.ArrayList;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class InstanceProvider
 {
-    private static final ArrayList<NvReadable> ON_SCREEN_DISPLAY_ATTRIBUTES = new ArrayList<>();
+    private static final ArrayList<ReadOnlyNvReadable> ON_SCREEN_DISPLAY_ATTRIBUTES = new ArrayList<>();
     private static FanProfile currentProfile;
     private static FanManager fanManager;
     private static NvGPU GPU_0;
@@ -86,7 +86,7 @@ public class InstanceProvider
     {
         return null;
     }
-    public static ArrayList<NvReadable> getOSDAttributes()
+    public static ArrayList<ReadOnlyNvReadable> getOSDAttributes()
     {
         return ON_SCREEN_DISPLAY_ATTRIBUTES;
     }

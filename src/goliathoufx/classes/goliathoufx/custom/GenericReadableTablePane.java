@@ -23,7 +23,6 @@
  */
 package goliathoufx.custom;
 
-import goliath.nvsettings.interfaces.NvReadable;
 import goliathoufx.panes.AppTabPane;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -31,14 +30,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 
 public class GenericReadableTablePane extends VBox
 { 
-    private final TableView<NvReadable> infoTable;
-    private final TableColumn<NvReadable, String> displayName;
-    private final TableColumn<NvReadable, String> displayValue;
+    private final TableView<ReadOnlyNvReadable> infoTable;
+    private final TableColumn<ReadOnlyNvReadable, String> displayName;
+    private final TableColumn<ReadOnlyNvReadable, String> displayValue;
     
-    public GenericReadableTablePane(List<NvReadable> readables)
+    public GenericReadableTablePane(List<ReadOnlyNvReadable> readables)
     {
         super();
         super.setPrefHeight(AppTabPane.CONTENT_HEIGHT);
@@ -47,14 +47,15 @@ public class GenericReadableTablePane extends VBox
         infoTable = new TableView<>(FXCollections.observableArrayList(readables));
         infoTable.setPrefWidth(AppTabPane.CONTENT_WIDTH);
         infoTable.setPrefHeight(AppTabPane.CONTENT_HEIGHT);
-        
         infoTable.setEditable(false);
         infoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         displayName = new TableColumn<>("Name");
+        displayName.setEditable(false);
         displayName.setCellValueFactory(new PropertyValueFactory<>("displayName"));
         
         displayValue = new TableColumn<>("Value");
+        displayValue.setEditable(false);
         displayValue.setCellValueFactory(new PropertyValueFactory<>("displayValue"));
         
         infoTable.getColumns().addAll(displayName, displayValue);

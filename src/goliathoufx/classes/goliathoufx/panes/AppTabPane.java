@@ -24,7 +24,7 @@
 package goliathoufx.panes;
 
 import goliathoufx.custom.GenericReadableTablePane;
-import goliath.nvsettings.enums.OperationalStatus;
+import goliath.envious.enums.OperationalStatus;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvxconfig.NvXConfig;
 import goliathoufx.customtabs.NotifyTab;
@@ -67,21 +67,20 @@ public class AppTabPane extends TabPane
         
         handler = new TabHandler();
         openTabs = new ArrayList<>();
-        
+
         tabs = new ArrayList<>();
 
         tabs.add(new Tab("GPU-0"));
-        tabs.get(0).setContent(new GenericReadableTablePane(new ArrayList<>(NvSettings.getPrimaryGPU().getAttributes())));
+        tabs.get(0).setContent(new GenericReadableTablePane(new ArrayList<>(NvSettings.getGPUS().get(0).getAttributes())));
 
         tabs.add(new Tab("FAN-0"));
         tabs.get(tabs.size()-1).setContent(new FanInfoPane());
-        
+
         tabs.add(new Tab("NvSMI"));
         tabs.get(tabs.size()-1).setContent(new NvSMIInfoPane());
 
         tabs.add(new Tab("PowerMizer & Overclocking"));
         tabs.get(tabs.size()-1).setContent(new PerformancePane(NvSettings.getPrimaryGPU()));
-
         //tabs.add(new Tab("Fan Control"));
         //tabs.get(tabs.size()-1).setContent(new FanProfilePane(NvSettings.getPrimaryGPU()));
 
@@ -99,9 +98,11 @@ public class AppTabPane extends TabPane
             tabs.get(tabs.size()-1).setContent(new NvXConfigPane());
         }
         
+        /*
         tabs.add(new Tab("App Console"));
         tabs.get(tabs.size()-1).setContent(pane);
-
+        */
+        
         tabs.add(new Tab("About"));
         tabs.get(tabs.size()-1).setContent(new AboutPane());
         

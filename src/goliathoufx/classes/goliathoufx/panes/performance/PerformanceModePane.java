@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package goliathoufx.panes.performance.powermizer;
+package goliathoufx.panes.performance;
 
 import goliath.nvsettings.enums.PowerMizerMode;
-import goliath.nvsettings.exceptions.ValueSetFailedException;
+import goliath.envious.exceptions.ValueSetFailedException;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.panes.ConsolePane;
 import javafx.beans.value.ChangeListener;
@@ -57,9 +57,9 @@ public class PerformanceModePane extends HBox
         
         gpu = g;
 
-        currentPerfLevelLabel = new Label(gpu.getCurrentPerformanceLevelAttribute().cmdValueProperty().getValue());
+        currentPerfLevelLabel = new Label(gpu.getCurrentPerformanceLevel().cmdValueProperty().getValue());
 
-        modes = new ComboBox<>(FXCollections.observableArrayList(gpu.getPowerMizer().getController().get().getAllValues().getAllInRange().get()));
+        modes = new ComboBox<>(FXCollections.observableArrayList(gpu.getPowerMizer().getController().get().getAllValues().getAllInRange()));
         modes.getSelectionModel().select(g.getPowerMizer().getCurrentValue());
         modes.getSelectionModel().selectedItemProperty().addListener(new ModeHandler());
         

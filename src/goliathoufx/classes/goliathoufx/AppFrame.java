@@ -22,9 +22,8 @@
  * THE SOFTWARE.
  */
 package goliathoufx;
-import goliath.nvsettings.enums.OperationalStatus;
-import goliath.nvsettings.interfaces.NvAttribute;
-import goliath.nvsettings.interfaces.NvReadable;
+import goliath.envious.enums.OperationalStatus;
+import goliath.envious.interfaces.NvControllable;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.customtabs.NotifyTab;
@@ -32,6 +31,9 @@ import goliathoufx.menu.AppMenu;
 import goliathoufx.panes.AppTabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import goliath.envious.interfaces.ReadOnlyNvReadable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AppFrame extends VBox
 {
@@ -50,12 +52,37 @@ public class AppFrame extends VBox
         
         super.getChildren().addAll(appMenu, tabPanel);
 
-        NvReadable power = NvSMI.getPowerLimit();
-        NvAttribute core = NvSettings.getPrimaryGPU().getCoreOffset();
-        NvAttribute voltage = NvSettings.getPrimaryGPU().getVoltageOffset();
-        NvAttribute fanMode = NvSettings.getPrimaryGPU().getFanMode();
+        List<NvControllable> conts = List.copyOf(NvSettings.getPrimaryGPU().getControllableAttributes());
+
+        String contList = "";
+
+        for(int i = 0; i < conts.size(); i++)
+        {
+            if(conts.get(i).getOperationalStatus().equals(OperationalStatus.READABLE) || conts.get(i).getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
+                contList += "\n" + conts.get(i).getControlName();
+        }
         
-        
+        if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) || NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE))
+            contList += "\n" + NvSMI.getPowerLimit().getControlName();
+            
+        if(System.getProperty("user.name").equals("root") && !contList.equals(""))
+        {
+            NotifyTab notify = new NotifyTab();
+            notify.setTabText("Warning");
+            notify.setHeaderText("GoliathENVIOUS API was unable to read one or more controllables.\n\nThis could be due to coolbits not being set or not being supported.");
+            notify.setDescText("The following is a list of these attributes:\n" + contList);
+            AppTabPane.getTabPane().showNotifyTab(notify);
+        }
+        else if(!contList.equals(""))
+        {
+            NotifyTab notify = new NotifyTab();
+            notify.setTabText("Warning");
+            notify.setHeaderText("GoliathENVIOUS API was unable to read one or more controllables.\n\nThis could be due to coolbits not being set, not being supported, or not running as root.");
+            notify.setDescText("The following is a list of these attributes:\n" + contList);
+            AppTabPane.getTabPane().showNotifyTab(notify);
+        }
+
+        /*
         if((fanMode.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) ||voltage.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) || core.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED)) && power.getOperationalStatus().equals(OperationalStatus.READABLE))
         {
             NotifyTab notify = new NotifyTab();
@@ -96,5 +123,6 @@ public class AppFrame extends VBox
             notify.setDescText("Some features will be disabled.");
             AppTabPane.getTabPane().showNotifyTab(notify);
         }
+        */
     }
 }
