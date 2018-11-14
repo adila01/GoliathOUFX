@@ -1,5 +1,11 @@
 # GoliathOUFX
-Linux Nvidia GPU overclocking utility written in JavaFX
+Modern GUI Linux Nvidia GPU overclocking utility written in JavaFX
+
+![](https://user-images.githubusercontent.com/10172435/47730178-a5eac400-dc2f-11e8-9971-7d1a8d211b19.png)
+![](https://user-images.githubusercontent.com/10172435/47730193-ae42ff00-dc2f-11e8-99f0-bdd1377569c9.png)
+![](https://user-images.githubusercontent.com/10172435/47730190-ae42ff00-dc2f-11e8-9d22-8ad18a554dc8.png)
+![](https://user-images.githubusercontent.com/10172435/47730191-ae42ff00-dc2f-11e8-90d2-6f48b27087dc.png)
+![](https://user-images.githubusercontent.com/10172435/47730192-ae42ff00-dc2f-11e8-9749-83da49edb0b9.png)
 
 ## Download
 You can download from the [releases](https://github.com/BlueGoliath/GoliathOUFX/releases) page.
