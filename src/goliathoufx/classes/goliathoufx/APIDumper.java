@@ -12,12 +12,12 @@ public class APIDumper
     {
         System.out.println("Dumping attribute info for primary GPU" + NvSettings.getPrimaryGPU().nameProperty().get());
         
-        printLoop(new ArrayList<>(NvSettings.getPrimaryGPU().getAttributes()));
+        printLoop(new ArrayList<>(NvSettings.getPrimaryGPU().getNvReadables()));
         
         System.out.println("\n\nDone.");
         System.out.println("\n\nPrinting attributes for FAN-0\n\n");
         
-        printLoop(new ArrayList<>(NvSettings.getPrimaryGPU().getFan().getAttributes()));
+        printLoop(new ArrayList<>(NvSettings.getPrimaryGPU().getFan().getNvReadables()));
         
         System.out.println("\n\nDone.");
         System.out.println("\n\nPrinting readables for nvidia-smi\n\n");

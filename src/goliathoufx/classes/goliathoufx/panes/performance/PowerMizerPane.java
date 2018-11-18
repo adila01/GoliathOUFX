@@ -95,8 +95,8 @@ public class PowerMizerPane extends VBox
         Space space = new Space(true);
         space.setMinWidth(AppTabPane.CONTENT_WIDTH);
         space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
-        space.setMinHeight(8);
-        space.setMaxHeight(8);
+        space.setMinHeight(14);
+        space.setMaxHeight(14);
         
                 
         gpu.getCurrentPerformanceLevel().valueProperty().addListener(new ValueListener());

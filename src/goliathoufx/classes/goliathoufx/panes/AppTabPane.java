@@ -32,13 +32,14 @@ import goliathoufx.customtabs.PromptTab;
 import java.util.ArrayList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Side;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
 public class AppTabPane extends TabPane
 {   
-    public static final int CONTENT_HEIGHT = 284;
-    public static final int CONTENT_WIDTH = 750;
+    public static final int CONTENT_HEIGHT = 362;
+    public static final int CONTENT_WIDTH = 900;
     
     public static boolean POWER_ONLY = false;
     public static boolean BLOCK_TAB_CREATION = false;
@@ -67,14 +68,31 @@ public class AppTabPane extends TabPane
         
         handler = new TabHandler();
         openTabs = new ArrayList<>();
+        
+        TabPane overviewTabPane = new TabPane();
+        overviewTabPane.setMinHeight(AppTabPane.CONTENT_HEIGHT);
+        overviewTabPane.setMaxWidth(AppTabPane.CONTENT_HEIGHT);
+        overviewTabPane.setMinWidth(AppTabPane.CONTENT_WIDTH);
+        overviewTabPane.setMaxWidth(AppTabPane.CONTENT_WIDTH);
+        overviewTabPane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+        overviewTabPane.setSide(Side.BOTTOM);
 
+        for(int i = 0; i < NvSettings.getGPUS().size(); i++)
+        {
+            overviewTabPane.getTabs().add(new Tab(NvSettings.getGPUS().get(i).idProperty().get()));
+            overviewTabPane.getTabs().get(i).setContent(new GPUOverviewPane(NvSettings.getGPUS().get(i)));
+        }
+        
         tabs = new ArrayList<>();
 
+        tabs.add(new Tab("Overview"));
+        tabs.get(0).setContent(overviewTabPane);
+        
         tabs.add(new Tab("GPU-0"));
-        tabs.get(0).setContent(new GenericReadableTablePane(new ArrayList<>(NvSettings.getGPUS().get(0).getAttributes())));
+        tabs.get(tabs.size()-1).setContent(new GPUPane());
 
         tabs.add(new Tab("FAN-0"));
-        tabs.get(tabs.size()-1).setContent(new FanInfoPane());
+        tabs.get(tabs.size()-1).setContent(new FanPane());
 
         tabs.add(new Tab("NvSMI"));
         tabs.get(tabs.size()-1).setContent(new NvSMIInfoPane());
@@ -91,7 +109,7 @@ public class AppTabPane extends TabPane
         tabs.add(new Tab("Misc"));
         tabs.get(tabs.size()-1).setContent(new MiscPane());
         */
-        
+
         if(NvXConfig.getCoolbitsController().getOperationalStatus().equals(OperationalStatus.CONTROLLABLE))
         {
             tabs.add(new Tab("NvXConfig"));

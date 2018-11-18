@@ -75,7 +75,7 @@ public class OSDPane extends VBox
         osdSelectionBox.setSpacing(25);
         
         List<ReadOnlyNvReadable> rds = new ArrayList<>();
-        rds.addAll(NvSettings.getPrimaryGPU().getAttributes());
+        rds.addAll(NvSettings.getPrimaryGPU().getNvReadables());
         rds.add(NvSettings.getDriverVersion());
         rds.add(NvSettings.getPrimaryGPU().getFan().getFanTargetSpeed());
         rds.add(NvSettings.getPrimaryGPU().getFan().getFanRPMSpeed());

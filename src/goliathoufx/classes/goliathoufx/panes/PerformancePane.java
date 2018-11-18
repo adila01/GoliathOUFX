@@ -38,8 +38,8 @@ public class PerformancePane extends VBox
     public PerformancePane(NvGPU g)
     {
         super();
-        super.setPrefHeight(AppTabPane.CONTENT_HEIGHT);
-        super.setPrefWidth(AppTabPane.CONTENT_WIDTH);
+        //super.setPrefHeight(AppTabPane.CONTENT_HEIGHT);
+        //super.setPrefWidth(AppTabPane.CONTENT_WIDTH);
         super.getStyleClass().add("vbox");
 
         gpu = g;

@@ -23,13 +23,18 @@
  */
 package goliathoufx.custom;
 
+import goliath.envious.interfaces.ReadOnlyNvReadable;
 import javafx.beans.property.Property;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class Tile extends VBox
 {   
+    private final Tile instance;
+    
     public Tile()
     {
         super();
@@ -37,6 +42,19 @@ public class Tile extends VBox
         super.setPadding(new Insets(8,8,8,8));
         super.setSpacing(5);
         super.autosize();
+        
+        instance = this;
+    }
+    
+    public void setNvReadable(ReadOnlyNvReadable rdbl)
+    {
+        super.getChildren().add(new Label(rdbl.displayNameProperty().get()));
+        
+        Label lb = new Label(rdbl.displayValueProperty().get());
+        rdbl.displayValueProperty().addListener(new ReadableBinder());
+        //lb.textProperty().bind(rdbl.displayValueProperty());
+        
+        super.getChildren().add(lb);
     }
     public void setWidth(int x)
     {
@@ -51,5 +69,14 @@ public class Tile extends VBox
         Label label = new Label();
         label.textProperty().bind(text);
         super.getChildren().add(label);
+    }
+    
+    private class ReadableBinder implements ChangeListener<String>
+    {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+        {
+            ((Label)instance.getChildren().get(1)).setText(newValue);
+        }
     }
 }

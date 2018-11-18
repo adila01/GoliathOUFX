@@ -23,16 +23,16 @@
  */
 package goliathoufx.menu;
 
+import goliath.envious.exceptions.ControllerResetFailedException;
+import goliath.nvsettings.main.NvSettings;
+import goliathoufx.menu.items.ResetMenu;
 import goliathoufx.menu.items.TabsMenu;
-import goliathoufx.menu.items.ThemesMenu;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 
-/**
- *
- * @author ty
- */
 public class AppMenu extends MenuBar
 {
     private final Menu[] items;
@@ -44,9 +44,32 @@ public class AppMenu extends MenuBar
 
 
         items = new Menu[1];
-        items[0] = new TabsMenu(tabPane);
+        //items[0] = new TabsMenu(tabPane);
+        items[0] = new ResetMenu();
+        
+
+        
+        
         //items[1] = new ThemesMenu();
 
         super.getMenus().addAll(items);
+    }
+    
+    private class ResetHandler implements EventHandler<Event>
+    {
+
+        @Override
+        public void handle(Event event)
+        {
+            try
+            {
+                NvSettings.getPrimaryGPU().resetControllables();
+            }
+            catch (ControllerResetFailedException ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+        
     }
 }

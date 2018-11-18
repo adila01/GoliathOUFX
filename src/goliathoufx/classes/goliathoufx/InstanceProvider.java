@@ -67,18 +67,14 @@ public class InstanceProvider
         if(GPU_0.getCurrentVoltage().getOperationalStatus().equals(OperationalStatus.READABLE))
             ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getCurrentVoltage());
         
+        ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getPCIeUsage());
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPowerDraw());
         
         if(NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.PASCAL) || NvSettings.getPrimaryGPU().getFamily().equals(GPUFamily.TURING))
             ON_SCREEN_DISPLAY_ATTRIBUTES.add(NvSMI.getPerformanceLimit());
         
         ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getCoreTemp());
-        ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getFan().getFanCurrentSpeed());
-        
-        APP_LOGGER.info("InstanceProvider: Envious API providing " + GPU_0.getAttributes().size() + " attributes for primary GPU " + GPU_0.nameProperty().getValue() + " from nvidia-settings.");
-        
-        APP_LOGGER.info("InstanceProvider: Envious API providing " + GPU_0.getFan().getAttributes().size() + " attributes for fan of primary GPU " + GPU_0.nameProperty().getValue() + " from nvidia-settings.");   
-        APP_LOGGER.info("InstanceProvider: Envious API providing " + NvSMI.READABLES.size() + " readables from nvidia-smi.");   
+        ON_SCREEN_DISPLAY_ATTRIBUTES.add(GPU_0.getFan().getFanCurrentSpeed()); 
                 
     }
     

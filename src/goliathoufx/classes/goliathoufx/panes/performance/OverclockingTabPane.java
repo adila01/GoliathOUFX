@@ -27,7 +27,6 @@ import goliath.nvsettings.main.NvSettings;
 import goliathoufx.custom.GenericControllableSliderBox;
 import goliath.nvsettings.targets.NvGPU;
 import goliathoufx.custom.GenericControllableComboBox;
-import goliathoufx.panes.AppTabPane;
 import java.util.ArrayList;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -43,12 +42,12 @@ public class OverclockingTabPane extends TabPane
         super();
         super.setMinHeight(104);
         super.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-        super.setPrefWidth(AppTabPane.CONTENT_WIDTH);
+        //super.setPrefWidth(AppTabPane.CONTENT_WIDTH);
         
         gpu = g;
         tabs = new ArrayList<>();
         
-        tabs.add(new Tab("Performance Mode"));
+        tabs.add(new Tab("PowerMizer Mode"));
         tabs.get(0).setContent(new GenericControllableComboBox<>(gpu.getPowerMizer()));
 
         tabs.add(new Tab("Core Offset(Mhz)"));

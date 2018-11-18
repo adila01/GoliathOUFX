@@ -20,6 +20,7 @@ public class LabeledSlider extends HBox
     public LabeledSlider(ReadOnlyNvReadable<Integer> attribute, boolean setVal)
     {
         super();
+        super.autosize();
         super.setSpacing(8);
         
         attr = attribute;

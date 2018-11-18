@@ -47,11 +47,12 @@ public class GoliathOUFX extends Application
     public static boolean SAFE_SHUTDOWN_ACHIEVED = false;
     
     public static Scene APP_SCENE;
+    public static Stage APP_STAGE;
     private static boolean DEV = false;
     
     private static AttributeUpdatesThread high, med, low, fan, power;
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws ValueSetFailedException
     {   
         APP_LOGGER.setUseParentHandlers(false);
         APP_LOGGER.addHandler(new LogHandler());
@@ -74,7 +75,7 @@ public class GoliathOUFX extends Application
         high = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getHighUpdateFrequencyAttributes()), Thread.MAX_PRIORITY, 0);
         high.start();
         
-        fan = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getFan().getAttributes()), Thread.MIN_PRIORITY, 600);
+        fan = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getFan().getNvReadables()), Thread.MIN_PRIORITY, 600);
         fan.start();
         
         med = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getMediumUpdateFrequencyAttributes()), Thread.MIN_PRIORITY, 750);
@@ -94,17 +95,20 @@ public class GoliathOUFX extends Application
     @Override
     public void start(Stage stage)
     {
+        APP_STAGE = stage;
+        APP_STAGE.setOpacity(.98);
+        
         APP_SCENE = new Scene(new AppFrame(stage));
         APP_SCENE.getStylesheets().add("goliath/css/Goliath-Envy.css");
         
         stage.setScene(APP_SCENE);
-        stage.setTitle("Goliath Overclocking Utility V2 - " + NvSettings.getPrimaryGPU().nameProperty().get()
+        stage.setTitle("Goliath Overclocking Utility V3 - " + NvSettings.getPrimaryGPU().nameProperty().get()
                 + " - Nvidia " + NvSettings.getDriverVersion().getCurrentValue());
         
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
-        stage.setHeight(372);
-        stage.setWidth(750);
+        stage.setMinHeight(450);
+        stage.setMinWidth(900);
         
         stage.show(); 
     }
@@ -114,7 +118,7 @@ public class GoliathOUFX extends Application
     {
         GoliathOUFX.closeApplication();
     }
-    
+
     public static void closeApplication()
     {
         if(!SAFE_SHUTDOWN_ACHIEVED)
