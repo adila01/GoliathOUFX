@@ -1,11 +1,14 @@
 # GoliathOUFX
 Modern GUI Linux Nvidia GPU overclocking utility written in JavaFX
 
-![](https://user-images.githubusercontent.com/10172435/47730178-a5eac400-dc2f-11e8-9971-7d1a8d211b19.png)
-![](https://user-images.githubusercontent.com/10172435/47730193-ae42ff00-dc2f-11e8-99f0-bdd1377569c9.png)
-![](https://user-images.githubusercontent.com/10172435/47730190-ae42ff00-dc2f-11e8-9d22-8ad18a554dc8.png)
-![](https://user-images.githubusercontent.com/10172435/47730191-ae42ff00-dc2f-11e8-90d2-6f48b27087dc.png)
-![](https://user-images.githubusercontent.com/10172435/47730192-ae42ff00-dc2f-11e8-9749-83da49edb0b9.png)
+![](https://user-images.githubusercontent.com/10172435/48668265-da270700-eaae-11e8-9caf-b06eb6351946.png)
+![](https://user-images.githubusercontent.com/10172435/48668266-da270700-eaae-11e8-95dc-a8df46b83d3e.png)
+![](https://user-images.githubusercontent.com/10172435/48668267-da270700-eaae-11e8-9337-e657f019b9da.png)
+![](https://user-images.githubusercontent.com/10172435/48668268-da270700-eaae-11e8-9990-10ff40add26e.png)
+![](https://user-images.githubusercontent.com/10172435/48668269-dabf9d80-eaae-11e8-9f55-7e444671de8d.png)
+![](https://user-images.githubusercontent.com/10172435/48668270-dabf9d80-eaae-11e8-9b23-3400ff7f6f3b.png)
+![](https://user-images.githubusercontent.com/10172435/48668271-dabf9d80-eaae-11e8-86cf-f6f26b84d0aa.png)
+
 
 ## Download
 You can download from the [releases](https://github.com/BlueGoliath/GoliathOUFX/releases) page.
