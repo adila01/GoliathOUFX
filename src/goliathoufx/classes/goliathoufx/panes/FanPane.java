@@ -3,9 +3,9 @@ package goliathoufx.panes;
 import goliathoufx.custom.GenericReadableTablePane;
 import goliathoufx.custom.Space;
 import goliath.nvsettings.main.NvSettings;
-import goliathoufx.custom.GenericControllableComboBox;
 import goliathoufx.custom.GenericControllableSliderBox;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
@@ -23,8 +23,8 @@ public class FanPane extends VBox
         Space space = new Space(true);
         space.setMinWidth(AppTabPane.CONTENT_WIDTH);
         space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
-        space.setMinHeight(14);
-        space.setMaxHeight(14);
+        space.setMinHeight(2);
+        space.setMaxHeight(2);
 
         TabPane tabPane = new TabPane();
         tabPane.setMinHeight(104);

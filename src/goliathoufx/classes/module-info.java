@@ -9,6 +9,7 @@ module goliathoufx
     requires goliath.io;
     requires goliath.css;
     requires goliath.envious;
+    requires java.desktop;
     
     exports goliathoufx;
     opens goliathoufx.css;

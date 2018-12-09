@@ -32,6 +32,8 @@ import goliathoufx.panes.AppTabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class AppFrame extends VBox
 {
@@ -63,7 +65,7 @@ public class AppFrame extends VBox
         
         if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) || NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE))
             contList += "\n" + NvSMI.getPowerLimit().getControlName();
-            
+          
         if(System.getProperty("user.name").equals("root") && !contList.equals(""))
         {
             NotifyTab notify = new NotifyTab();
@@ -81,47 +83,6 @@ public class AppFrame extends VBox
             AppTabPane.getTabPane().showNotifyTab(notify);
         }
 
-        /*
-        if((fanMode.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) ||voltage.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED) || core.getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED)) && power.getOperationalStatus().equals(OperationalStatus.READABLE))
-        {
-            NotifyTab notify = new NotifyTab();
-            notify.setTabText("Warning");
-            notify.setHeaderText("GoliathENVIOUS API was unable to read one or more attributes from nvidia-settings.");
-            notify.setDescText("This is likely because a valid cool-bits value is not set or it is not supported by this GPU.\n\nRunning as normal user. Some features require root.\n\nSome features disabled.");
-            AppTabPane.getTabPane().showNotifyTab(notify);
-        }
-        else if(NvSettings.getPrimaryGPU().getCoreOffset().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
-        {
-            NotifyTab notify = new NotifyTab();
-            notify.setTabText("Warning");
-            notify.setHeaderText("GoliathENVIOUS API was unable to read core offset from nvidia-settings.");
-            notify.setDescText("This is likely because a valid cool-bits value is not set.\n\nCore and Memory Overclocking is disabled.");
-            AppTabPane.getTabPane().showNotifyTab(notify);
-        }
-        else if(NvSettings.getPrimaryGPU().getFanMode().getOperationalStatus().equals(OperationalStatus.READABLE))
-        {
-            NotifyTab notify = new NotifyTab();
-            notify.setTabText("Warning");
-            notify.setHeaderText("GoliathENVIOUS API was unable to read Fan Mode from nvidia-settings.");
-            notify.setDescText("This is likely because a valid cool-bits value is not set.\n\nFan Control is disabled.");
-            AppTabPane.getTabPane().showNotifyTab(notify);
-        }
-        else if(NvSettings.getPrimaryGPU().getVoltageOffset().getOperationalStatus().equals(OperationalStatus.NOT_SUPPORTED))
-        {
-            NotifyTab notify = new NotifyTab();
-            notify.setTabText("Warning");
-            notify.setHeaderText("GoliathENVIOUS API was unable to read voltage offset from nvidia-settings.");
-            notify.setDescText("This is likely because a valid cool-bits value is not set or is not supported by this GPU.\n\nVoltage offset is disabled.");
-            AppTabPane.getTabPane().showNotifyTab(notify);
-        }
-        else if(NvSMI.getPowerLimit().getOperationalStatus().equals(OperationalStatus.READABLE))
-        {
-            NotifyTab notify = new NotifyTab();
-            notify.setTabText("Warning");
-            notify.setHeaderText("Running GoliathOUFX as a normal user.");
-            notify.setDescText("Some features will be disabled.");
-            AppTabPane.getTabPane().showNotifyTab(notify);
-        }
-        */
+        super.setMaxHeight(436);
     }
 }

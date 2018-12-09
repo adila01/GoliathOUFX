@@ -25,6 +25,7 @@ public class NvXConfigPane extends VBox
     public NvXConfigPane()
     {
         super();
+        super.setHeight(AppTabPane.CONTENT_HEIGHT);
         super.setPadding(new Insets(8,8,8,8));
         super.setSpacing(10);
         

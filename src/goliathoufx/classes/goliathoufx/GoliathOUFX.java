@@ -24,7 +24,6 @@
 package goliathoufx;
 
 import goliath.envious.exceptions.ControllerResetFailedException;
-import goliath.envious.exceptions.ValueSetFailedException;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvsmi.main.NvSMI;
 import goliathoufx.panes.ConsolePane;
@@ -37,6 +36,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -52,7 +52,7 @@ public class GoliathOUFX extends Application
     
     private static AttributeUpdatesThread high, med, low, fan, power;
 
-    public static void main(String[] args) throws ValueSetFailedException
+    public static void main(String[] args)
     {   
         APP_LOGGER.setUseParentHandlers(false);
         APP_LOGGER.addHandler(new LogHandler());
@@ -68,8 +68,8 @@ public class GoliathOUFX extends Application
             }
         }
 
-        APIDumper.dump();
-        
+        NvSettings.init();
+
         InstanceProvider.init();
         
         high = new AttributeUpdatesThread(new ArrayList<>(NvSettings.getPrimaryGPU().getHighUpdateFrequencyAttributes()), Thread.MAX_PRIORITY, 0);
@@ -107,9 +107,8 @@ public class GoliathOUFX extends Application
         
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
-        stage.setMinHeight(450);
+        stage.setMinHeight(436);
         stage.setMinWidth(900);
-        
         stage.show(); 
     }
     

@@ -1,33 +1,30 @@
 package goliathoufx.panes;
 
-import goliathoufx.relationships.Relationship;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import goliathoufx.custom.relations.GBoostRelationPane;
+import javafx.geometry.Side;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.Pane;
 
-public class NvRelationsPane extends VBox
+public class NvRelationsPane extends TabPane
 {
-    private final TableView<Relationship> table;
-    
-    private final HBox buttonArea;
-    
-    
-    private final Button newButton;
-    private final Button deleteButton;
-    
     public NvRelationsPane()
     {
-        table = new TableView<>();
+        super();
+        super.setSide(Side.BOTTOM);
+        super.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
         
+        Tab custom = new Tab("Custom");
+        custom.setContent(new Pane());
         
+        Tab fanControl = new Tab("Fan Curve");
+        fanControl.setContent(new Pane());
         
-        buttonArea = new HBox();
-        buttonArea.setPadding(new Insets(8,8,8,8));
+        Tab boost = new Tab("GBoost");
+        boost.setContent(new GBoostRelationPane());
         
-        
-        newButton = new Button("New");
-        deleteButton = new Button("Delete Selected");
+        super.getTabs().add(custom);
+        super.getTabs().add(fanControl);
+        super.getTabs().add(boost);
     }
 }

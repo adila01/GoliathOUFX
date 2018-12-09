@@ -23,7 +23,6 @@
  */
 package goliathoufx.panes;
 
-import goliathoufx.custom.GenericReadableTablePane;
 import goliath.envious.enums.OperationalStatus;
 import goliath.nvsettings.main.NvSettings;
 import goliath.nvxconfig.NvXConfig;
@@ -38,7 +37,7 @@ import javafx.scene.control.TabPane;
 
 public class AppTabPane extends TabPane
 {   
-    public static final int CONTENT_HEIGHT = 362;
+    public static final int CONTENT_HEIGHT = 348;
     public static final int CONTENT_WIDTH = 900;
     
     public static boolean POWER_ONLY = false;
@@ -99,17 +98,13 @@ public class AppTabPane extends TabPane
 
         tabs.add(new Tab("PowerMizer & Overclocking"));
         tabs.get(tabs.size()-1).setContent(new PerformancePane(NvSettings.getPrimaryGPU()));
-        //tabs.add(new Tab("Fan Control"));
-        //tabs.get(tabs.size()-1).setContent(new FanProfilePane(NvSettings.getPrimaryGPU()));
+        
+        //tabs.add(new Tab("NvRelations"));
+        //tabs.get(tabs.size()-1).setContent(new NvRelationsPane());
 
         tabs.add(new Tab("OSD"));
         tabs.get(tabs.size()-1).setContent(new OSDPane());
         
-        /*
-        tabs.add(new Tab("Misc"));
-        tabs.get(tabs.size()-1).setContent(new MiscPane());
-        */
-
         if(NvXConfig.getCoolbitsController().getOperationalStatus().equals(OperationalStatus.CONTROLLABLE))
         {
             tabs.add(new Tab("NvXConfig"));

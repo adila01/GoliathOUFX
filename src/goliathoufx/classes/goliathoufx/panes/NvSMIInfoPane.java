@@ -37,8 +37,8 @@ public class NvSMIInfoPane extends VBox
         Space space = new Space(true);
         space.setMinWidth(AppTabPane.CONTENT_WIDTH);
         space.setMaxWidth(AppTabPane.CONTENT_WIDTH);
-        space.setMinHeight(14);
-        space.setMaxHeight(14);
+        space.setMinHeight(2);
+        space.setMaxHeight(2);
 
         TabPane tabPane = new TabPane();
         tabPane.setMinHeight(104);

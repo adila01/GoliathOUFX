@@ -36,15 +36,6 @@ public class GPUOverviewPane extends GridPane
         Tile gpuCores = new Tile();
         gpuCores.setNvReadable(g.getCUDACores()); 
         
-        Tile totalMemory = new Tile();
-        totalMemory.setNvReadable(g.getDedicatedMemory()); 
-
-        Tile memoryInterface = new Tile();
-        memoryInterface.setNvReadable(g.getMemoryInterface()); 
-        
-        Tile memoryBandwidthUsage = new Tile();
-        memoryBandwidthUsage.setNvReadable(g.getMemoryUsage()); 
-        
         Tile coreUsage = new Tile();
         coreUsage.setNvReadable(g.getCoreUsage()); 
         
@@ -56,6 +47,15 @@ public class GPUOverviewPane extends GridPane
         
         Tile memoryClock = new Tile();
         memoryClock.setNvReadable(g.getMemoryClock()); 
+        
+        Tile totalMemory = new Tile();
+        totalMemory.setNvReadable(g.getDedicatedMemory()); 
+
+        Tile memoryInterface = new Tile();
+        memoryInterface.setNvReadable(g.getMemoryInterface()); 
+        
+        Tile memoryBandwidthUsage = new Tile();
+        memoryBandwidthUsage.setNvReadable(g.getMemoryUsage()); 
         
         Tile pcieGen = new Tile();
         pcieGen.setNvReadable(g.getPCIeGen());
@@ -110,16 +110,16 @@ public class GPUOverviewPane extends GridPane
         super.add(gpuIdTile, 1, 0);
         super.add(gpuCores, 2, 0);
         super.add(gpuUUIDTile, 3, 0);
+               
+        super.add(coreUsage, 0, 1);
+        super.add(coreClock, 1, 1);
+        super.add(memoryClock, 2, 1);
+        super.add(gpuTemp, 3, 1);
         
-        super.add(usedMemory, 0, 1);
-        super.add(totalMemory, 1, 1);
-        super.add(memoryInterface, 2, 1);
-        super.add(memoryBandwidthUsage, 3, 1);
-        
-        super.add(coreUsage, 0, 2);
-        super.add(coreClock, 1, 2);
-        super.add(memoryClock, 2, 2);
-        super.add(gpuTemp, 3, 2);
+        super.add(usedMemory, 0, 2);
+        super.add(totalMemory, 1, 2);
+        super.add(memoryInterface, 2, 2);
+        super.add(memoryBandwidthUsage, 3, 2);
         
         super.add(pcieGen, 0, 3);
         super.add(pcieCurrentWidth, 1, 3);
@@ -128,8 +128,7 @@ public class GPUOverviewPane extends GridPane
         
         super.add(coreOCSupported, 0, 4);
         super.add(voltageSupport, 1, 4);
-        super.add(fanControlSupport, 2, 4);
-        
+        super.add(fanControlSupport, 2, 4);        
         super.add(powerLimitSupport, 3, 4);
     }
 }
